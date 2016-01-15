@@ -1,0 +1,8 @@
+language: bash
+services: docker
+
+script:
+   - ./bin/build
+
+after_script:
+   - docker images
