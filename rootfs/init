@@ -19,7 +19,7 @@ DB_HOST="${DB_HOST:-'db'}" && \
 sed -i "s#XXX-DB_HOST-XXX#${DB_HOST}#" ${DB_CONFIG_FILE}
 
 # Port:
-DB_PORT="${DB_PORT:-'db'}" && \
+DB_PORT="${DB_PORT:-'3306'}" && \
 sed -i "s#XXX-DB_PORT-XXX#${DB_PORT}#" ${DB_CONFIG_FILE}
 
 # Username:

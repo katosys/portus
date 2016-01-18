@@ -6,11 +6,11 @@
 case $1 in
 
   start)
-    curl -sX POST -H "Content-type: application/json" ${MARATHON_URL}/v2/apps -d @marathon.json | jq '.'
+    curl -sX POST -H "Content-type: application/json" ${MARATHON_URL}/v2/groups -d @marathon.json | jq '.'
     ;;
 
-  restart)
-    curl -sX POST -H "Content-type: application/json" ${MARATHON_URL}/v2/apps/sys/portus/restart | jq '.'
+  deploy)
+    curl -sX PUT -H "Content-type: application/json" ${MARATHON_URL}/v2/groups -d @marathon.json | jq '.'
     ;;
 
   destroy)
