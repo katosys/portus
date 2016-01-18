@@ -14,7 +14,7 @@ case $1 in
     ;;
 
   destroy)
-    curl -sX DELETE -H "Content-type: application/json" ${MARATHON_URL}/v2/apps/sys/portus | jq '.'
+    curl -sX DELETE -H "Content-type: application/json" ${MARATHON_URL}/v2/groups/sys/portus | jq '.'
     ;;
 
 esac
