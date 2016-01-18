@@ -1,0 +1,16 @@
+default: &default
+  adapter:  XXX-DB_ADAPTER-XXX
+  encoding: XXX-DB_ENCODING-XXX
+  host:     XXX-DB_HOST-XXX
+  username: XXX-DB_USERNAME-XXX
+  password: XXX-DB_PASSWORD-XXX
+  database: XXX-DB_DATABASE-XXX
+
+development:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  <<: *default
