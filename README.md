@@ -1,8 +1,11 @@
 # docker-portus
-Dockerized Portus server
+
+[![Build Status](https://travis-ci.org/h0tbird/docker-portus.svg?branch=master)](https://travis-ci.org/h0tbird/docker-portus)
+
+This is a containerized Portus server.
 
 
-MariaDB:
+##### MariaDB:
 ```
 docker run -it --rm \
 --net host \
@@ -13,7 +16,7 @@ docker run -it --rm \
 mariadb:latest
 ```
 
-Portus:
+##### Portus:
 ```
 docker run -it --rm \
 --net host \
