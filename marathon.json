@@ -24,6 +24,7 @@
           ],
           "privileged": false,
           "parameters": [
+            { "key": "env", "value": "PORTUS_PORT=80" },
             { "key": "env", "value": "DB_HOST=db-portus-sys.marathon.cell-1.mad.mesos" },
             { "key": "env", "value": "DB_USERNAME=portus" },
             { "key": "env", "value": "DB_PASSWORD=portus" },
@@ -64,7 +65,7 @@
       "container": {
         "type": "DOCKER",
         "docker": {
-          "image": "library/mariadb:5",
+          "image": "library/mariadb:latest",
           "network": "BRIDGE",
           "portMappings": [
             { "containerPort": 3306, "hostPort": 0 }
