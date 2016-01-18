@@ -75,7 +75,10 @@
             { "key": "env", "value": "MYSQL_ROOT_PASSWORD=portus" },
             { "key": "env", "value": "MYSQL_USER=portus" },
             { "key": "env", "value": "MYSQL_PASSWORD=portus" },
-            { "key": "env", "value": "MYSQL_DATABASE=portus" }
+            { "key": "env", "value": "MYSQL_DATABASE=portus" },
+            { "key": "volume-driver", "value": "rbd" },
+            { "key": "volume", "value": "sys-portus-db:/var/lib/mysql" },
+            { "key": "security-opt", "value": "label:disable" }
           ],
           "forcePullImage": true
         }
