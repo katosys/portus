@@ -47,7 +47,8 @@
       "upgradeStrategy": {
         "minimumHealthCapacity": 0,
         "maximumOverCapacity": 1
-      }
+      },
+      "dependencies": ["db"]
     },
     {
       "id": "db",
