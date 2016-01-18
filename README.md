@@ -13,7 +13,7 @@ docker run -it --rm \
 --env MYSQL_USER=portus \
 --env MYSQL_PASSWORD=portus \
 --env MYSQL_DATABASE=portus \
-mariadb:latest
+mariadb:10
 ```
 
 ##### Portus:
@@ -27,5 +27,5 @@ docker run -it --rm \
 --env DB_USERNAME=portus \
 --env DB_PASSWORD=portus \
 --env DB_DATABASE=portus \
-h0tbird/portus:latest
+h0tbird/portus:v2.0.0-1
 ```
