@@ -48,7 +48,10 @@
         "minimumHealthCapacity": 0,
         "maximumOverCapacity": 1
       },
-      "dependencies": ["db"]
+      "dependencies": [
+        "db",
+        "../registry/internal"
+      ]
     },
     {
       "id": "db",
