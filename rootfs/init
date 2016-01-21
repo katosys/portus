@@ -5,6 +5,7 @@
 #------------------------------------------------------------------------------
 
 DB_CONFIG_FILE='/portus/config/database.yml'
+SECRETS_CONFIG_FILE='/portus/config/secrets.yml'
 
 # Adapter:
 : ${DB_ADAPTER:-mysql2} && \
@@ -36,6 +37,22 @@ sed -i "s#XXX-DB_DATABASE-XXX#${DB_DATABASE}#" ${DB_CONFIG_FILE}
 
 # Portus port:
 [ "${PORT0}" ] && [ ! "${PORTUS_PORT}" ] && PORTUS_PORT="${PORT0}"
+
+# Secret key base:
+: ${SECRETS_SECRET_KEY_BASE:-secret-goes-here} && \
+sed -i "s#XXX-SECRETS_SECRET_KEY_BASE-XXX#${SECRETS_SECRET_KEY_BASE}#" ${SECRETS_CONFIG_FILE}
+
+# Encryption private key path:
+: ${SECRETS_ENCRYPTION_PRIVATE_KEY_PATH:-/certs/server.key} && \
+sed -i "s#XXX-SECRETS_ENCRYPTION_PRIVATE_KEY_PATH-XXX#${SECRETS_ENCRYPTION_PRIVATE_KEY_PATH}#" ${SECRETS_CONFIG_FILE}
+
+# Machine fqdn:
+: ${SECRETS_MACHINE_FQDN:-127.0.0.1} && \
+sed -i "s#XXX-SECRETS_MACHINE_FQDN-XXX#${SECRETS_MACHINE_FQDN}#" ${SECRETS_CONFIG_FILE}
+
+# Portus password:
+: ${SECRETS_PORTUS_PASSWORD:-portus} && \
+sed -i "s#XXX-SECRETS_PORTUS_PASSWORD-XXX#${SECRETS_PORTUS_PASSWORD}#" ${SECRETS_CONFIG_FILE}
 
 #------------------------------------------------------------------------------
 # Populate the database:

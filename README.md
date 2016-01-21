@@ -56,5 +56,9 @@ docker run -it --rm \
 --env DB_USERNAME=portus \
 --env DB_PASSWORD=portus \
 --env DB_DATABASE=portus \
+--env SECRETS_SECRET_KEY_BASE=secret-goes-here \
+--env SECRETS_ENCRYPTION_PRIVATE_KEY_PATH=/certs/server.key \
+--env SECRETS_MACHINE_FQDN=127.0.0.1 \
+--env SECRETS_PORTUS_PASSWORD=portus \
 h0tbird/portus:latest
 ```
