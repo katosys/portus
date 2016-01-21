@@ -4,7 +4,7 @@
 
 This is a containerized Portus server.
 
-##### Certificate:
+##### 1. Certificate:
 ```
 mkdir certs && openssl req \
 -newkey rsa:4096 -nodes -sha256 -x509 -days 365 \
@@ -12,7 +12,7 @@ mkdir certs && openssl req \
 -keyout certs/server.key -out certs/server.crt
 ```
 
-##### MariaDB:
+##### 2. MariaDB:
 ```
 docker run -it --rm \
 --net host \
@@ -23,7 +23,7 @@ docker run -it --rm \
 mariadb:10
 ```
 
-##### Registry:
+##### 3. Registry:
 ```
 docker run -it --rm \
 --net host \
@@ -44,7 +44,7 @@ docker run -it --rm \
 h0tbird/registry:latest
 ```
 
-##### Portus:
+##### 4. Portus:
 ```
 docker run -it --rm \
 --net host \

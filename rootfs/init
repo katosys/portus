@@ -4,38 +4,38 @@
 # Configure the service:
 #------------------------------------------------------------------------------
 
-DB_CONFIG_FILE="/portus/config/database.yml"
+DB_CONFIG_FILE='/portus/config/database.yml'
 
 # Adapter:
-DB_ADAPTER="${DB_ADAPTER:-'mysql2'}" && \
+: ${DB_ADAPTER:-mysql2} && \
 sed -i "s#XXX-DB_ADAPTER-XXX#${DB_ADAPTER}#" ${DB_CONFIG_FILE}
 
 # Encoding:
-DB_ENCODING="${DB_ENCODING:-'utf8'}" && \
+: ${DB_ENCODING:-utf8} && \
 sed -i "s#XXX-DB_ENCODING-XXX#${DB_ENCODING}#" ${DB_CONFIG_FILE}
 
 # Host:
-DB_HOST="${DB_HOST:-'db'}" && \
+: ${DB_HOST:-db} && \
 sed -i "s#XXX-DB_HOST-XXX#${DB_HOST}#" ${DB_CONFIG_FILE}
 
 # Port:
-DB_PORT="${DB_PORT:-3306}" && \
+: ${DB_PORT:-3306} && \
 sed -i "s#XXX-DB_PORT-XXX#${DB_PORT}#" ${DB_CONFIG_FILE}
 
 # Username:
-DB_USERNAME="${DB_USERNAME:-'root'}" && \
+: ${DB_USERNAME:-root} && \
 sed -i "s#XXX-DB_USERNAME-XXX#${DB_USERNAME}#" ${DB_CONFIG_FILE}
 
 # Password:
-DB_PASSWORD="${DB_PASSWORD:-'portus'}" && \
+: ${DB_PASSWORD:-portus} && \
 sed -i "s#XXX-DB_PASSWORD-XXX#${DB_PASSWORD}#" ${DB_CONFIG_FILE}
 
 # Database:
-DB_DATABASE="${DB_DATABASE:-'portus'}" && \
+: ${DB_DATABASE:-portus} && \
 sed -i "s#XXX-DB_DATABASE-XXX#${DB_DATABASE}#" ${DB_CONFIG_FILE}
 
 # Portus port:
-[ "${PORT0}" ] && [ ! "${PORTUS_PORT}" ] && PORTUS_PORT=${PORT0}
+[ "${PORT0}" ] && [ ! "${PORTUS_PORT}" ] && PORTUS_PORT="${PORT0}"
 
 #------------------------------------------------------------------------------
 # Populate the database:
