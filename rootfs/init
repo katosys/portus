@@ -57,5 +57,5 @@ mysql -h ${DB_HOST} -P ${DB_PORT} -u ${DB_USERNAME} -p${DB_PASSWORD} ${DB_DATABA
 # Run:
 #------------------------------------------------------------------------------
 
-export SSL_CERT_DIR='/certs'
+export SSL_CERT_DIR='/certs' && c_rehash /certs
 exec env puma -b tcp://0.0.0.0:${PORTUS_PORT:-80} -w 3

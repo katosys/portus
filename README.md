@@ -15,7 +15,7 @@ mkdir certs && openssl req \
 ##### 2. MariaDB:
 ```
 docker run -it --rm \
---net host \
+--net host --name mariadb \
 --env MYSQL_ROOT_PASSWORD=portus \
 --env MYSQL_USER=portus \
 --env MYSQL_PASSWORD=portus \
@@ -26,8 +26,8 @@ mariadb:10
 ##### 3. Registry:
 ```
 docker run -it --rm \
---net host \
---volume ${PWD}/certs:/certs:ro \
+--net host --name registry \
+--volume ${PWD}/certs:/certs \
 --env REGISTRY_HTTP_SECRET=secret-goes-here \
 --env REGISTRY_HTTP_TLS_CERTIFICATE=/certs/server.crt \
 --env REGISTRY_HTTP_TLS_KEY=/certs/server.key \
@@ -47,8 +47,8 @@ h0tbird/registry:latest
 ##### 4. Portus:
 ```
 docker run -it --rm \
---net host \
---volume ${PWD}/certs:/certs:ro \
+--net host --name portus \
+--volume ${PWD}/certs:/certs \
 --env DB_ADAPTER=mysql2 \
 --env DB_ENCODING=utf8 \
 --env DB_HOST=127.0.0.1 \
