@@ -4,6 +4,14 @@
 
 This is a containerized Portus server.
 
+##### Certificate:
+```
+mkdir certs && openssl req \
+-newkey rsa:4096 -nodes -sha256 -x509 -days 365 \
+-subj '/CN=127.0.0.1/O=Localhost LTD./C=US' \
+-keyout certs/server.key -out certs/server.crt
+```
+
 ##### MariaDB:
 ```
 docker run -it --rm \
@@ -13,15 +21,6 @@ docker run -it --rm \
 --env MYSQL_PASSWORD=portus \
 --env MYSQL_DATABASE=portus \
 mariadb:10
-```
-
-##### Certificate:
-```
-mkdir certs && openssl req \
--newkey rsa:4096 -nodes -sha256 -x509 -days 365 \
--subj '/CN=127.0.0.1/O=Localhost LTD./C=US' \
--keyout certs/server.key \
--out certs/server.crt
 ```
 
 ##### Registry:
@@ -57,5 +56,5 @@ docker run -it --rm \
 --env DB_USERNAME=portus \
 --env DB_PASSWORD=portus \
 --env DB_DATABASE=portus \
-h0tbird/portus:v2.0.0-1
+h0tbird/portus:latest
 ```
