@@ -1,6 +1,6 @@
 #!/bin/bash
 
-[ $# -ne 1 ] && echo "Usage: $0 <start|restart|destroy>" && exit 1
+[ $# -ne 1 ] && echo "Usage: $0 <start|deploy|destroy>" && exit 1
 [ -z "${MARATHON_URL}" ] && echo 'Ops! MARATHON_URL is not set' && exit 1
 
 case $1 in
