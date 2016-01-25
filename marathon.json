@@ -17,7 +17,7 @@
       "container": {
         "type": "DOCKER",
         "docker": {
-          "image": "h0tbird/portus:v2.0.0-2",
+          "image": "h0tbird/portus:latest",
           "network": "BRIDGE",
           "portMappings": [
             { "containerPort": 80, "hostPort": 0 }
@@ -36,7 +36,7 @@
             { "key": "env", "value": "SECRETS_SECRET_KEY_BASE=secret-goes-here" },
             { "key": "env", "value": "SECRETS_ENCRYPTION_PRIVATE_KEY_PATH=/mnt/mesos/sandbox/certs/server.key" },
             { "key": "env", "value": "SECRETS_MACHINE_FQDN=web-portus-sys.marathon" },
-            { "key": "env", "value": "SECRETS_PORTUS_PASSWORD=portus" }
+            { "key": "env", "value": "SECRETS_PORTUS_PASSWORD=portuspw" }
           ],
           "forcePullImage": true
         }

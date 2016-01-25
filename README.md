@@ -5,6 +5,9 @@
 This is a containerized Portus server.
 
 ##### 1. Certificate:
+
+`CN` must match the registry hostname used in Portus configuration (without the `:5000` part).
+
 ```
 mkdir certs && openssl req \
 -newkey rsa:4096 -nodes -sha256 -x509 -days 365 \
@@ -56,14 +59,17 @@ docker run -it --rm \
 --env DB_USERNAME=portus \
 --env DB_PASSWORD=portus \
 --env DB_DATABASE=portus \
+--env MACHINE_FQDN=127.0.0.1 \
 --env SECRETS_SECRET_KEY_BASE=secret-goes-here \
 --env SECRETS_ENCRYPTION_PRIVATE_KEY_PATH=/certs/server.key \
---env SECRETS_MACHINE_FQDN=127.0.0.1 \
---env SECRETS_PORTUS_PASSWORD=portus \
+--env SECRETS_PORTUS_PASSWORD=portuspw \
 h0tbird/portus:latest
 ```
 
 ##### 5. Docker:
 ```
 docker login -u <user> -p <password> -e <email> 127.0.0.1:5000
+docker pull busybox:latest
+docker tag busybox:latest 127.0.0.1:5000/<user>/busybox:latest
+docker push 127.0.0.1:5000/<user>/busybox:latest
 ```

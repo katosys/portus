@@ -4,8 +4,13 @@
 # Configure the service:
 #------------------------------------------------------------------------------
 
+CONFIG_FILE='/portus/config/config.yml'
 DB_CONFIG_FILE='/portus/config/database.yml'
 SECRETS_CONFIG_FILE='/portus/config/secrets.yml'
+
+# Machine fqdn:
+: ${MACHINE_FQDN:-127.0.0.1} && \
+sed -i "s#XXX-MACHINE_FQDN-XXX#${MACHINE_FQDN}#" ${CONFIG_FILE}
 
 # Adapter:
 : ${DB_ADAPTER:-mysql2} && \
@@ -35,9 +40,6 @@ sed -i "s#XXX-DB_PASSWORD-XXX#${DB_PASSWORD}#" ${DB_CONFIG_FILE}
 : ${DB_DATABASE:-portus} && \
 sed -i "s#XXX-DB_DATABASE-XXX#${DB_DATABASE}#" ${DB_CONFIG_FILE}
 
-# Portus port:
-[ "${PORT0}" ] && [ ! "${PORTUS_PORT}" ] && PORTUS_PORT="${PORT0}"
-
 # Secret key base:
 : ${SECRETS_SECRET_KEY_BASE:-secret-goes-here} && \
 sed -i "s#XXX-SECRETS_SECRET_KEY_BASE-XXX#${SECRETS_SECRET_KEY_BASE}#" ${SECRETS_CONFIG_FILE}
@@ -45,10 +47,6 @@ sed -i "s#XXX-SECRETS_SECRET_KEY_BASE-XXX#${SECRETS_SECRET_KEY_BASE}#" ${SECRETS
 # Encryption private key path:
 : ${SECRETS_ENCRYPTION_PRIVATE_KEY_PATH:-/certs/server.key} && \
 sed -i "s#XXX-SECRETS_ENCRYPTION_PRIVATE_KEY_PATH-XXX#${SECRETS_ENCRYPTION_PRIVATE_KEY_PATH}#" ${SECRETS_CONFIG_FILE}
-
-# Machine fqdn:
-: ${SECRETS_MACHINE_FQDN:-127.0.0.1} && \
-sed -i "s#XXX-SECRETS_MACHINE_FQDN-XXX#${SECRETS_MACHINE_FQDN}#" ${SECRETS_CONFIG_FILE}
 
 # Portus password:
 : ${SECRETS_PORTUS_PASSWORD:-portus} && \
@@ -74,5 +72,6 @@ mysql -h ${DB_HOST} -P ${DB_PORT} -u ${DB_USERNAME} -p${DB_PASSWORD} ${DB_DATABA
 # Run:
 #------------------------------------------------------------------------------
 
+[ "${PORT0}" ] && [ ! "${PORTUS_PORT}" ] && PORTUS_PORT="${PORT0}"
 export SSL_CERT_DIR=${SSL_CERT_DIR:-/certs} && c_rehash ${SSL_CERT_DIR}
 exec env puma -b tcp://0.0.0.0:${PORTUS_PORT:-80} -w 3
