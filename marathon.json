@@ -32,8 +32,9 @@
             { "key": "env", "value": "DB_USERNAME=portus" },
             { "key": "env", "value": "DB_PASSWORD=portus" },
             { "key": "env", "value": "DB_DATABASE=portus" },
+            { "key": "env", "value": "SSL_CERT_DIR=/mnt/mesos/sandbox/certs" },
             { "key": "env", "value": "SECRETS_SECRET_KEY_BASE=secret-goes-here" },
-            { "key": "env", "value": "SECRETS_ENCRYPTION_PRIVATE_KEY_PATH=/certs/server.key" },
+            { "key": "env", "value": "SECRETS_ENCRYPTION_PRIVATE_KEY_PATH=/mnt/mesos/sandbox/certs/server.key" },
             { "key": "env", "value": "SECRETS_MACHINE_FQDN=web-portus-sys.marathon" },
             { "key": "env", "value": "SECRETS_PORTUS_PASSWORD=portus" }
           ],
@@ -50,6 +51,9 @@
           "protocol": "HTTP",
           "timeoutSeconds": 5
         }
+      ],
+      "uris":  [
+        "http://data01/secrets/certs.tar.bz2"
       ],
       "upgradeStrategy": {
         "minimumHealthCapacity": 0,
