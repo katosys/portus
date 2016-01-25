@@ -41,7 +41,7 @@ docker run -it --rm \
 --env ENDPOINT_TIMEOUT=500 \
 --env ENDPOINT_THRESHOLD=5 \
 --env ENDPOINT_BACKOFF=1 \
-h0tbird/registry:latest
+h0tbird/registry:v2.2.1-3
 ```
 
 ##### 4. Portus:
@@ -60,5 +60,5 @@ docker run -it --rm \
 --env SECRETS_ENCRYPTION_PRIVATE_KEY_PATH=/certs/server.key \
 --env SECRETS_MACHINE_FQDN=127.0.0.1 \
 --env SECRETS_PORTUS_PASSWORD=portus \
-h0tbird/portus:latest
+h0tbird/portus:v2.0.0-2
 ```
