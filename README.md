@@ -60,5 +60,10 @@ docker run -it --rm \
 --env SECRETS_ENCRYPTION_PRIVATE_KEY_PATH=/certs/server.key \
 --env SECRETS_MACHINE_FQDN=127.0.0.1 \
 --env SECRETS_PORTUS_PASSWORD=portus \
-h0tbird/portus:v2.0.0-2
+h0tbird/portus:latest
+```
+
+##### 5. Docker:
+```
+docker login -u <user> -p <password> -e <email> 127.0.0.1:5000
 ```
