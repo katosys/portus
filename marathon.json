@@ -27,7 +27,7 @@
             { "key": "env", "value": "PORTUS_PORT=80" },
             { "key": "env", "value": "DB_ADAPTER=mysql2" },
             { "key": "env", "value": "DB_ENCODING=utf8" },
-            { "key": "env", "value": "DB_HOST=db-portus-sys.marathon.cell-1.mad.mesos" },
+            { "key": "env", "value": "DB_HOST=db-portus-sys.marathon" },
             { "key": "env", "value": "DB_PORT=3306" },
             { "key": "env", "value": "DB_USERNAME=portus" },
             { "key": "env", "value": "DB_PASSWORD=portus" },
