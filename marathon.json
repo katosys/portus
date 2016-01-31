@@ -61,7 +61,7 @@
       },
       "dependencies": [
         "db",
-        "../registry/internal"
+        "/sys/registry/internal"
       ]
     },
     {
