@@ -9,7 +9,9 @@ MAINTAINER Marc Villacorta Morera <marc.villacorta@gmail.com>
 # Environment variables:
 #------------------------------------------------------------------------------
 
-ENV PORTUS_VERSION="master" \
+ENV RACK_ENV="production" \
+    RAILS_ENV="production" \
+    PORTUS_VERSION="master" \
     NOKOGIRI_USE_SYSTEM_LIBRARIES="1"
 
 #------------------------------------------------------------------------------

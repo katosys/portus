@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/h0tbird/docker-portus.svg?branch=master)](https://travis-ci.org/h0tbird/docker-portus)
 
-This is a containerized Portus server.
+This is a containerized Portus server for the Docker registry. Based on Alpine Linux.
 
 ##### 1. Certificate:
 
@@ -44,7 +44,7 @@ docker run -it --rm \
 --env ENDPOINT_TIMEOUT=500 \
 --env ENDPOINT_THRESHOLD=5 \
 --env ENDPOINT_BACKOFF=1 \
-h0tbird/registry:v2.2.1-3
+h0tbird/registry:v2.3.0-1
 ```
 
 ##### 4. Portus:
@@ -59,6 +59,8 @@ docker run -it --rm \
 --env DB_USERNAME=portus \
 --env DB_PASSWORD=portus \
 --env DB_DATABASE=portus \
+--env RACK_ENV=production \
+--env RAILS_ENV=production \
 --env MACHINE_FQDN=127.0.0.1 \
 --env SECRETS_SECRET_KEY_BASE=secret-goes-here \
 --env SECRETS_ENCRYPTION_PRIVATE_KEY_PATH=/certs/server-key.pem \
