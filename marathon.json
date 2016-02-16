@@ -24,7 +24,6 @@
           ],
           "privileged": false,
           "parameters": [
-            { "key": "env", "value": "PORTUS_PORT=80" },
             { "key": "env", "value": "DB_ADAPTER=mysql2" },
             { "key": "env", "value": "DB_ENCODING=utf8" },
             { "key": "env", "value": "DB_HOST=db-portus-sys.marathon" },
@@ -34,6 +33,10 @@
             { "key": "env", "value": "DB_DATABASE=portus" },
             { "key": "env", "value": "RACK_ENV=production" },
             { "key": "env", "value": "RAILS_ENV=production" },
+            { "key": "env", "value": "PUMA_SSL_KEY=/mnt/mesos/sandbox/certs/server-key.pem" },
+            { "key": "env", "value": "PUMA_SSL_CRT=/mnt/mesos/sandbox/certs/server-crt.pem" },
+            { "key": "env", "value": "PUMA_PORT=443" },
+            { "key": "env", "value": "PUMA_WORKERS=4" },
             { "key": "env", "value": "MACHINE_FQDN=web-portus-sys.marathon" },
             { "key": "env", "value": "SSL_CERT_DIR=/mnt/mesos/sandbox/certs" },
             { "key": "env", "value": "SECRETS_SECRET_KEY_BASE=secret-goes-here" },

@@ -9,9 +9,7 @@ MAINTAINER Marc Villacorta Morera <marc.villacorta@gmail.com>
 # Environment variables:
 #------------------------------------------------------------------------------
 
-ENV RACK_ENV="production" \
-    RAILS_ENV="production" \
-    PORTUS_VERSION="master" \
+ENV PORTUS_VERSION="master" \
     NOKOGIRI_USE_SYSTEM_LIBRARIES="1"
 
 #------------------------------------------------------------------------------
@@ -41,5 +39,5 @@ ADD rootfs /
 #------------------------------------------------------------------------------
 
 WORKDIR /portus
-EXPOSE 80
+EXPOSE 80 443
 ENTRYPOINT ["/init"]

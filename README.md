@@ -40,7 +40,7 @@ docker run -it --rm \
 --env REGISTRY_AUTH_TOKEN_ISSUER=127.0.0.1 \
 --env REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE=/certs/server-crt.pem \
 --env ENDPOINT_NAME=portus \
---env ENDPOINT_URL=http://127.0.0.1/v2/webhooks/events \
+--env ENDPOINT_URL=https://127.0.0.1/v2/webhooks/events \
 --env ENDPOINT_TIMEOUT=500 \
 --env ENDPOINT_THRESHOLD=5 \
 --env ENDPOINT_BACKOFF=1 \
@@ -61,6 +61,10 @@ docker run -it --rm \
 --env DB_DATABASE=portus \
 --env RACK_ENV=production \
 --env RAILS_ENV=production \
+--env PUMA_SSL_KEY=/certs/server-key.pem \
+--env PUMA_SSL_CRT=/certs/server-crt.pem \
+--env PUMA_PORT=443 \
+--env PUMA_WORKERS=4 \
 --env MACHINE_FQDN=127.0.0.1 \
 --env SECRETS_SECRET_KEY_BASE=secret-goes-here \
 --env SECRETS_ENCRYPTION_PRIVATE_KEY_PATH=/certs/server-key.pem \
