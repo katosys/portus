@@ -6,18 +6,43 @@ This is a containerized Portus server for the Docker registry. Based on Alpine L
 
 ##### 1. Certificate:
 
-`CN` must match the registry hostname used in Portus configuration (without the `:5000` part).
+Configure one certificate to rule them all:
 
 ```
-mkdir certs && openssl req \
--newkey rsa:4096 -nodes -sha256 -x509 -days 365 \
--subj '/CN=127.0.0.1/O=Localhost LTD./C=US' \
+mkdir portus && cd portus
+
+cat << EOF > ssl.conf
+[ req ]
+prompt             = no
+distinguished_name = req_subj
+x509_extensions    = x509_ext
+
+[ req_subj ]
+CN = Localhost
+
+[ x509_ext ]
+subjectKeyIdentifier   = hash
+authorityKeyIdentifier = keyid,issuer
+basicConstraints       = CA:true
+subjectAltName         = @alternate_names
+
+[ alternate_names ]
+DNS.1 = localhost
+IP.1  = 127.0.0.1
+EOF
+```
+
+Build the certificate:
+
+```
+mkdir certs && openssl req -config ssl.conf \
+-new -x509 -nodes -sha256 -days 365 -newkey rsa:4096 \
 -keyout certs/server-key.pem -out certs/server-crt.pem
 ```
 
 ##### 2. MariaDB:
 ```
-docker run -it --rm \
+cd portus && docker run -it --rm \
 --net host --name mariadb \
 --env MYSQL_ROOT_PASSWORD=portus \
 --env MYSQL_USER=portus \
@@ -28,14 +53,14 @@ mariadb:10
 
 ##### 3. Registry:
 ```
-docker run -it --rm \
+cd portus && docker run -it --rm \
 --net host --name registry \
 --volume ${PWD}/certs:/certs \
 --env REGISTRY_HTTP_SECRET=secret-goes-here \
 --env REGISTRY_HTTP_TLS_CERTIFICATE=/certs/server-crt.pem \
 --env REGISTRY_HTTP_TLS_KEY=/certs/server-key.pem \
 --env REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY=/var/lib/registry \
---env REGISTRY_AUTH_TOKEN_REALM=http://127.0.0.1/v2/token \
+--env REGISTRY_AUTH_TOKEN_REALM=https://127.0.0.1/v2/token \
 --env REGISTRY_AUTH_TOKEN_SERVICE=127.0.0.1:5000 \
 --env REGISTRY_AUTH_TOKEN_ISSUER=127.0.0.1 \
 --env REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE=/certs/server-crt.pem \
@@ -49,7 +74,7 @@ h0tbird/registry:v2.3.0-1
 
 ##### 4. Portus:
 ```
-docker run -it --rm \
+cd portus && docker run -it --rm \
 --net host --name portus \
 --volume ${PWD}/certs:/certs \
 --env DB_ADAPTER=mysql2 \
