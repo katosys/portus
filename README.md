@@ -111,4 +111,6 @@ docker login -u <user> -p <password> -e <email> 127.0.0.1:5000
 docker pull busybox:latest
 docker tag busybox:latest 127.0.0.1:5000/<user>/busybox:latest
 docker push 127.0.0.1:5000/<user>/busybox:latest
+docker rmi busybox:latest 127.0.0.1:5000/<user>/busybox:latest
+docker pull 127.0.0.1:5000/<user>/busybox:latest
 ```
