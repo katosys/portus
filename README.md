@@ -42,14 +42,14 @@ mkdir certs && openssl req -config ssl.conf \
 
 Instruct docker daemon to trust the certificate:
 ```
-mkdir -p /etc/docker/certs.d/127.0.0.1:5000
-cp certs/server-crt.pem /etc/docker/certs.d/127.0.0.1:5000/ca.crt
-systemctl restart docker
+sudo mkdir -p /etc/docker/certs.d/127.0.0.1:5000
+sudo cp certs/server-crt.pem /etc/docker/certs.d/127.0.0.1:5000/ca.crt
+sudo systemctl restart docker
 ```
 
 ##### 2. MariaDB:
 ```
-cd portus && docker run -it --rm \
+docker run -it --rm \
 --net host --name mariadb \
 --env MYSQL_ROOT_PASSWORD=portus \
 --env MYSQL_USER=portus \
@@ -58,30 +58,7 @@ cd portus && docker run -it --rm \
 mariadb:10
 ```
 
-##### 3. Registry:
-```
-cd portus && docker run -it --rm \
---net host --name registry \
---volume ${PWD}/certs:/certs \
---env REGISTRY_LOG_LEVEL=info \
---env REGISTRY_HTTP_SECRET=secret-goes-here \
---env REGISTRY_HTTP_TLS_CERTIFICATE=/certs/server-crt.pem \
---env REGISTRY_HTTP_TLS_KEY=/certs/server-key.pem \
---env REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY=/var/lib/registry \
---env REGISTRY_AUTH_TOKEN_REALM=https://127.0.0.1/v2/token \
---env REGISTRY_AUTH_TOKEN_SERVICE=127.0.0.1:5000 \
---env REGISTRY_AUTH_TOKEN_ISSUER=127.0.0.1 \
---env REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE=/certs/server-crt.pem \
---env SSL_TRUST=127.0.0.1:443 \
---env ENDPOINT_NAME=portus \
---env ENDPOINT_URL=https://127.0.0.1/v2/webhooks/events \
---env ENDPOINT_TIMEOUT=500 \
---env ENDPOINT_THRESHOLD=5 \
---env ENDPOINT_BACKOFF=1 \
-h0tbird/registry:v2.3.0-2
-```
-
-##### 4. Portus:
+##### 3. Portus:
 ```
 cd portus && docker run -it --rm \
 --net host --name portus \
@@ -104,6 +81,29 @@ cd portus && docker run -it --rm \
 --env SECRETS_ENCRYPTION_PRIVATE_KEY_PATH=/certs/server-key.pem \
 --env SECRETS_PORTUS_PASSWORD=portuspw \
 h0tbird/portus:latest
+```
+
+##### 4. Registry:
+```
+cd portus && docker run -it --rm \
+--net host --name registry \
+--volume ${PWD}/certs:/certs \
+--env REGISTRY_LOG_LEVEL=info \
+--env REGISTRY_HTTP_SECRET=secret-goes-here \
+--env REGISTRY_HTTP_TLS_CERTIFICATE=/certs/server-crt.pem \
+--env REGISTRY_HTTP_TLS_KEY=/certs/server-key.pem \
+--env REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY=/var/lib/registry \
+--env REGISTRY_AUTH_TOKEN_REALM=https://127.0.0.1/v2/token \
+--env REGISTRY_AUTH_TOKEN_SERVICE=127.0.0.1:5000 \
+--env REGISTRY_AUTH_TOKEN_ISSUER=127.0.0.1 \
+--env REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE=/certs/server-crt.pem \
+--env SSL_TRUST=127.0.0.1:443 \
+--env ENDPOINT_NAME=portus \
+--env ENDPOINT_URL=https://127.0.0.1/v2/webhooks/events \
+--env ENDPOINT_TIMEOUT=500 \
+--env ENDPOINT_THRESHOLD=5 \
+--env ENDPOINT_BACKOFF=1 \
+h0tbird/registry:v2.3.0-2
 ```
 
 ##### 5. Docker:
