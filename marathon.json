@@ -99,7 +99,7 @@
             { "key": "volume", "value": "sys-portus-db:/var/lib/mysql" },
             { "key": "security-opt", "value": "label:disable" }
           ],
-          "forcePullImage": true
+          "forcePullImage": false
         }
       },
       "healthChecks": [
