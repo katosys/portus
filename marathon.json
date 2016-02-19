@@ -64,8 +64,7 @@
         "maximumOverCapacity": 1
       },
       "dependencies": [
-        "db",
-        "/sys/registry/internal"
+        "db"
       ]
     },
     {
