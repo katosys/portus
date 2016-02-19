@@ -20,7 +20,7 @@
           "image": "h0tbird/portus:latest",
           "network": "BRIDGE",
           "portMappings": [
-            { "containerPort": 80, "hostPort": 0 }
+            { "containerPort": 443, "hostPort": 0 }
           ],
           "privileged": false,
           "parameters": [
@@ -51,9 +51,8 @@
           "gracePeriodSeconds": 120,
           "intervalSeconds": 30,
           "maxConsecutiveFailures": 3,
-          "path": "/",
           "portIndex": 0,
-          "protocol": "HTTP",
+          "protocol": "TCP",
           "timeoutSeconds": 5
         }
       ],
