@@ -83,6 +83,8 @@ cd portus && docker run -it --rm \
 h0tbird/portus:latest
 ```
 
+Make sure any endpoint defined in `SSL_TRUST` is up and running before starting the registry.
+
 ##### 4. Registry:
 ```
 cd portus && docker run -it --rm \
