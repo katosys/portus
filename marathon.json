@@ -17,7 +17,7 @@
       "container": {
         "type": "DOCKER",
         "docker": {
-          "image": "h0tbird/portus:latest",
+          "image": "h0tbird/portus:v2.0.2-1",
           "network": "BRIDGE",
           "portMappings": [
             { "containerPort": 443, "hostPort": 0 }
@@ -43,7 +43,7 @@
             { "key": "env", "value": "SECRETS_ENCRYPTION_PRIVATE_KEY_PATH=/mnt/mesos/sandbox/certs/server-key.pem" },
             { "key": "env", "value": "SECRETS_PORTUS_PASSWORD=portuspw" }
           ],
-          "forcePullImage": true
+          "forcePullImage": false
         }
       },
       "healthChecks": [
