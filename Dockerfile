@@ -2,7 +2,7 @@
 # Set the base image for subsequent instructions:
 #------------------------------------------------------------------------------
 
-FROM alpine:3.2
+FROM alpine:3.3
 MAINTAINER Marc Villacorta Morera <marc.villacorta@gmail.com>
 
 #------------------------------------------------------------------------------
@@ -16,10 +16,10 @@ ENV PORTUS_VERSION="master" \
 # Install:
 #------------------------------------------------------------------------------
 
-RUN apk add --update -t deps git ruby-mini_portile gcc make musl-dev \
-    libxml2-dev libxslt-dev mariadb-dev openssl-dev \
-    && apk add bash ruby-bundler ruby-dev nodejs tzdata libxslt \
-    mariadb-libs mariadb-client openssl \
+RUN apk --no-cache add --update -t deps git ruby-mini_portile gcc make \
+    musl-dev libxml2-dev libxslt-dev mariadb-dev openssl-dev \
+    && apk --no-cache add bash ruby-bundler ruby-dev nodejs tzdata libxslt \
+    mariadb-libs mariadb-client openssl ruby-io-console \
     && echo 'gem: --verbose --no-document' > /etc/gemrc; cd /tmp \
     && git clone https://github.com/SUSE/Portus.git . \
     && git checkout ${PORTUS_VERSION}; mkdir /portus \
