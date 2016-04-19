@@ -80,5 +80,5 @@ mysql -h ${DB_HOST} -P ${DB_PORT} -u ${DB_USERNAME} -p${DB_PASSWORD} ${DB_DATABA
 export SSL_CERT_DIR=${SSL_CERT_DIR:-/certs} && c_rehash ${SSL_CERT_DIR}
 
 [[ "${PUMA_SSL_KEY}" && "${PUMA_SSL_CRT}" ]] && \
-exec env puma -e ${RACK_ENV} -b "ssl://0.0.0.0:${PUMA_PORT:-443}?key=${PUMA_SSL_KEY}&cert=${PUMA_SSL_CRT}" -w ${PUMA_WORKERS:-3} ||
-exec env puma -e ${RACK_ENV} -b "tcp://0.0.0.0:${PUMA_PORT:-80}" -w ${PUMA_WORKERS:-3}
+exec env puma -e ${RACK_ENV} -b "ssl://${PUMA_IP:-0.0.0.0}:${PUMA_PORT:-443}?key=${PUMA_SSL_KEY}&cert=${PUMA_SSL_CRT}" -w ${PUMA_WORKERS:-3} ||
+exec env puma -e ${RACK_ENV} -b "tcp://${PUMA_IP:-0.0.0.0}:${PUMA_PORT:-80}" -w ${PUMA_WORKERS:-3}
