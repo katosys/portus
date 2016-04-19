@@ -57,6 +57,9 @@ docker run -it --rm \
 --env MYSQL_DATABASE=portus \
 mariadb:10
 ```
+Note that PUMA_IP is to be used if you want to have the registry and portus running on the same port but on different addresses, for example: 
+  - Portus -> 10.0.0.1:443
+  - Registry -> 10.0.0.2:443
 
 ##### 3. Portus:
 ```
@@ -74,6 +77,7 @@ cd portus && docker run -it --rm \
 --env RAILS_ENV=production \
 --env PUMA_SSL_KEY=/certs/server-key.pem \
 --env PUMA_SSL_CRT=/certs/server-crt.pem \
+--env PUMA_IP=127.0.0.1 \
 --env PUMA_PORT=443 \
 --env PUMA_WORKERS=4 \
 --env MACHINE_FQDN=127.0.0.1 \
