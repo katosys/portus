@@ -4,7 +4,7 @@
     {
       "id": "web",
       "instances": 1,
-      "cpus": 2,
+      "cpus": 0.5,
       "mem": 2048,
       "disk": 0,
       "requirePorts": true,
@@ -70,7 +70,7 @@
     {
       "id": "db",
       "instances": 1,
-      "cpus": 2,
+      "cpus": 0.5,
       "mem": 2048,
       "disk": 0,
       "requirePorts": true,
@@ -94,9 +94,8 @@
             { "key": "env", "value": "MYSQL_USER=portus" },
             { "key": "env", "value": "MYSQL_PASSWORD=portus" },
             { "key": "env", "value": "MYSQL_DATABASE=portus" },
-            { "key": "volume-driver", "value": "rbd" },
-            { "key": "volume", "value": "sys-portus-db:/var/lib/mysql" },
-            { "key": "security-opt", "value": "label:disable" }
+            { "key": "volume-driver", "value": "rexray" },
+            { "key": "volume", "value": "sys-portus-db:/var/lib/mysql" }
           ],
           "forcePullImage": false
         }
