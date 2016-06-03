@@ -57,11 +57,14 @@ docker run -it --rm \
 --env MYSQL_DATABASE=portus \
 mariadb:10
 ```
-Note that PUMA_IP is to be used if you want to have the registry and portus running on the same port but on different addresses, for example: 
+
+##### 3. Portus:
+
+Note that `PUMA_IP` is to be used if you want to have the registry and portus running on the same port but on different addresses, for example:
+
   - Portus -> 10.0.0.1:443
   - Registry -> 10.0.0.2:443
 
-##### 3. Portus:
 ```
 cd portus && docker run -it --rm \
 --net host --name portus \
@@ -87,9 +90,10 @@ cd portus && docker run -it --rm \
 h0tbird/portus:latest
 ```
 
+##### 4. Registry:
+
 Make sure any endpoint defined in `SSL_TRUST` is up and running before starting the registry.
 
-##### 4. Registry:
 ```
 cd portus && docker run -it --rm \
 --net host --name registry \
@@ -109,7 +113,7 @@ cd portus && docker run -it --rm \
 --env ENDPOINT_TIMEOUT=500 \
 --env ENDPOINT_THRESHOLD=5 \
 --env ENDPOINT_BACKOFF=1 \
-h0tbird/registry:v2.3.0-2
+h0tbird/registry:v2.4.1-1
 ```
 
 ##### 5. Docker:
