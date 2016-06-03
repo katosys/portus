@@ -87,7 +87,7 @@ cd portus && docker run -it --rm \
 --env SECRETS_SECRET_KEY_BASE=secret-goes-here \
 --env SECRETS_ENCRYPTION_PRIVATE_KEY_PATH=/certs/server-key.pem \
 --env SECRETS_PORTUS_PASSWORD=portuspw \
-h0tbird/portus:v2.0.5-1
+h0tbird/portus:latest
 ```
 
 ##### 4. Registry:

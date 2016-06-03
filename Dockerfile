@@ -9,7 +9,7 @@ MAINTAINER Marc Villacorta Morera <marc.villacorta@gmail.com>
 # Environment variables:
 #------------------------------------------------------------------------------
 
-ENV PORTUS_VERSION="2.0.5" \
+ENV PORTUS_VERSION="master" \
     NOKOGIRI_USE_SYSTEM_LIBRARIES="1"
 
 #------------------------------------------------------------------------------

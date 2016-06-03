@@ -16,7 +16,7 @@
       "container": {
         "type": "DOCKER",
         "docker": {
-          "image": "h0tbird/portus:v2.0.2-1",
+          "image": "h0tbird/portus:latest",
           "network": "BRIDGE",
           "portMappings": [
             { "containerPort": 443, "hostPort": 0 }
