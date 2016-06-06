@@ -115,7 +115,7 @@ cd portus && docker run -it --rm \
 --env ENDPOINT_TIMEOUT=500 \
 --env ENDPOINT_THRESHOLD=5 \
 --env ENDPOINT_BACKOFF=1 \
-h0tbird/registry:v2.4.1-1
+h0tbird/registry:v2.4.1-2
 ```
 
 Verify the status of the registry:
@@ -127,7 +127,7 @@ curl -s http://127.0.0.1:5001/debug/vars | jq '.'
 
 ##### 5. Docker:
 ```
-docker login -u <user> -p <password> -e <email> 127.0.0.1:5000
+docker login -u <user> 127.0.0.1:5000
 docker pull busybox:latest
 docker tag busybox:latest 127.0.0.1:5000/<user>/busybox:latest
 docker push 127.0.0.1:5000/<user>/busybox:latest
