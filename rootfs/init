@@ -17,32 +17,32 @@ sed -i "s#XXX-PORTUS_MACHINE_FQDN-XXX#${PORTUS_MACHINE_FQDN}#" ${CONFIG_FILE}
 sed -i "s#XXX-PORTUS_DELETE_ENABLED-XXX#${PORTUS_DELETE_ENABLED}#" ${CONFIG_FILE}
 
 # Adapter:
-: ${DB_ADAPTER:=mysql2} && \
-sed -i "s#XXX-DB_ADAPTER-XXX#${DB_ADAPTER}#" ${DB_CONFIG_FILE}
+: ${MARIADB_ADAPTER:=mysql2} && \
+sed -i "s#XXX-MARIADB_ADAPTER-XXX#${MARIADB_ADAPTER}#" ${DB_CONFIG_FILE}
 
 # Encoding:
-: ${DB_ENCODING:=utf8} && \
-sed -i "s#XXX-DB_ENCODING-XXX#${DB_ENCODING}#" ${DB_CONFIG_FILE}
+: ${MARIADB_ENCODING:=utf8} && \
+sed -i "s#XXX-MARIADB_ENCODING-XXX#${MARIADB_ENCODING}#" ${DB_CONFIG_FILE}
 
 # Host:
-: ${DB_HOST:=db} && \
-sed -i "s#XXX-DB_HOST-XXX#${DB_HOST}#" ${DB_CONFIG_FILE}
+: ${MARIADB_SERVICE_HOST:=db} && \
+sed -i "s#XXX-MARIADB_SERVICE_HOST-XXX#${MARIADB_SERVICE_HOST}#" ${DB_CONFIG_FILE}
 
 # Port:
-: ${DB_PORT:=3306} && \
-sed -i "s#XXX-DB_PORT-XXX#${DB_PORT}#" ${DB_CONFIG_FILE}
+: ${MARIADB_PORT:=3306} && \
+sed -i "s#XXX-MARIADB_PORT-XXX#${MARIADB_PORT}#" ${DB_CONFIG_FILE}
 
 # Username:
-: ${DB_USERNAME:=root} && \
-sed -i "s#XXX-DB_USERNAME-XXX#${DB_USERNAME}#" ${DB_CONFIG_FILE}
+: ${MARIADB_USER:=root} && \
+sed -i "s#XXX-MARIADB_USER-XXX#${MARIADB_USER}#" ${DB_CONFIG_FILE}
 
 # Password:
-: ${DB_PASSWORD:=portus} && \
-sed -i "s#XXX-DB_PASSWORD-XXX#${DB_PASSWORD}#" ${DB_CONFIG_FILE}
+: ${MARIADB_PASSWORD:=portus} && \
+sed -i "s#XXX-MARIADB_PASSWORD-XXX#${MARIADB_PASSWORD}#" ${DB_CONFIG_FILE}
 
 # Database:
-: ${DB_DATABASE:=portus} && \
-sed -i "s#XXX-DB_DATABASE-XXX#${DB_DATABASE}#" ${DB_CONFIG_FILE}
+: ${MARIADB_DATABASE:=portus} && \
+sed -i "s#XXX-MARIADB_DATABASE-XXX#${MARIADB_DATABASE}#" ${DB_CONFIG_FILE}
 
 # Secret key base:
 : ${PORTUS_SECRET_KEY_BASE:=secret-goes-here} && \
@@ -66,14 +66,14 @@ export RAILS_ENV=${RAILS_ENV:-production}
 
 function mysql_alive() {
   local RETRIES=30; while [ ${RETRIES} -gt 0 ]; do
-    timeout -t 2 bash -c "echo > /dev/tcp/${DB_HOST}/${DB_PORT}" &> /dev/null && return 0
+    timeout -t 2 bash -c "echo > /dev/tcp/${MARIADB_SERVICE_HOST}/${MARIADB_PORT}" &> /dev/null && return 0
     sleep 1; RETRIES=$((RETRIES - 1)); echo -n '.'
   done; echo; return 1
 }
 
 echo -n 'Waiting for the database '
-mysql_alive || { echo; echo "Ops! Where is ${DB_HOST}:${DB_PORT} ?"; exit 1; }
-mysql -h ${DB_HOST} -P ${DB_PORT} -u ${DB_USERNAME} -p${DB_PASSWORD} ${DB_DATABASE} \
+mysql_alive || { echo; echo "Ops! Where is ${MARIADB_SERVICE_HOST}:${MARIADB_PORT} ?"; exit 1; }
+mysql -h ${MARIADB_SERVICE_HOST} -P ${MARIADB_PORT} -u ${MARIADB_USER} -p${MARIADB_PASSWORD} ${MARIADB_DATABASE} \
 -e "show tables" | grep -q 'registries' || env bundle exec rake db:setup
 
 #------------------------------------------------------------------------------

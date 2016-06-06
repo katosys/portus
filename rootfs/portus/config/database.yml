@@ -1,10 +1,10 @@
 default: &default
-  adapter:  XXX-DB_ADAPTER-XXX
-  encoding: XXX-DB_ENCODING-XXX
-  host:     XXX-DB_HOST-XXX
-  username: XXX-DB_USERNAME-XXX
-  password: XXX-DB_PASSWORD-XXX
-  database: XXX-DB_DATABASE-XXX
+  adapter:  XXX-MARIADB_ADAPTER-XXX
+  encoding: XXX-MARIADB_ENCODING-XXX
+  host:     XXX-MARIADB_SERVICE_HOST-XXX
+  username: XXX-MARIADB_USER-XXX
+  password: XXX-MARIADB_PASSWORD-XXX
+  database: XXX-MARIADB_DATABASE-XXX
 
 development:
   <<: *default

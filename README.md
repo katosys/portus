@@ -69,13 +69,13 @@ Note that `PUMA_IP` is to be used if you want to have the registry and portus ru
 cd portus && docker run -it --rm \
 --net host --name portus \
 --volume ${PWD}/certs:/certs \
---env DB_ADAPTER=mysql2 \
---env DB_ENCODING=utf8 \
---env DB_HOST=127.0.0.1 \
---env DB_PORT=3306 \
---env DB_USERNAME=portus \
---env DB_PASSWORD=portus \
---env DB_DATABASE=portus \
+--env MARIADB_ADAPTER=mysql2 \
+--env MARIADB_ENCODING=utf8 \
+--env MARIADB_SERVICE_HOST=127.0.0.1 \
+--env MARIADB_PORT=3306 \
+--env MARIADB_USER=portus \
+--env MARIADB_PASSWORD=portus \
+--env MARIADB_DATABASE=portus \
 --env RACK_ENV=production \
 --env RAILS_ENV=production \
 --env PUMA_SSL_KEY=/certs/server-key.pem \
@@ -87,7 +87,7 @@ cd portus && docker run -it --rm \
 --env PORTUS_DELETE_ENABLED=true \
 --env PORTUS_SECRET_KEY_BASE=$(openssl rand -hex 64) \
 --env PORTUS_ENCRYPTION_PRIVATE_KEY_PATH=/certs/server-key.pem \
---env PORTUS_PORTUS_PASSWORD=portuspw \
+--env PORTUS_PORTUS_PASSWORD=$(openssl rand -hex 64) \
 h0tbird/portus:latest
 ```
 
