@@ -11,6 +11,8 @@ email:
     domain: "example.com"
 gravatar:
   enabled: true
+delete:
+  enabled: XXX-DELETE_ENABLED-XXX
 ldap:
   enabled: false
   hostname: "ldap_hostname"
@@ -36,3 +38,5 @@ jwt_expiration_time:
   value: "5.minutes"
 machine_fqdn:
   value: XXX-MACHINE_FQDN-XXX
+display_name:
+  enabled: false

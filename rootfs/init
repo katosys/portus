@@ -12,6 +12,10 @@ SECRETS_CONFIG_FILE='/portus/config/secrets.yml'
 : ${MACHINE_FQDN:-127.0.0.1} && \
 sed -i "s#XXX-MACHINE_FQDN-XXX#${MACHINE_FQDN}#" ${CONFIG_FILE}
 
+# Delete enabled:
+: ${DELETE_ENABLED:=false} && \
+sed -i "s#XXX-DELETE_ENABLED-XXX#${DELETE_ENABLED}#" ${CONFIG_FILE}
+
 # Adapter:
 : ${DB_ADAPTER:-mysql2} && \
 sed -i "s#XXX-DB_ADAPTER-XXX#${DB_ADAPTER}#" ${DB_CONFIG_FILE}
@@ -78,6 +82,15 @@ mysql -h ${DB_HOST} -P ${DB_PORT} -u ${DB_USERNAME} -p${DB_PASSWORD} ${DB_DATABA
 
 [ "${PORT0}" ] && [ ! "${PUMA_PORT}" ] && PUMA_PORT="${PORT0}"
 export SSL_CERT_DIR=${SSL_CERT_DIR:-/certs} && c_rehash ${SSL_CERT_DIR}
+
+echo "--[${CONFIG_FILE}]------------------------------------------------------"
+cat ${CONFIG_FILE}
+
+echo "--[${DB_CONFIG_FILE}]------------------------------------------------------"
+cat ${DB_CONFIG_FILE}
+
+echo "--[${SECRETS_CONFIG_FILE}]------------------------------------------------------"
+cat ${SECRETS_CONFIG_FILE}
 
 [[ "${PUMA_SSL_KEY}" && "${PUMA_SSL_CRT}" ]] && \
 exec env puma -e ${RACK_ENV} -b "ssl://${PUMA_IP:-0.0.0.0}:${PUMA_PORT:-443}?key=${PUMA_SSL_KEY}&cert=${PUMA_SSL_CRT}" -w ${PUMA_WORKERS:-3} ||
