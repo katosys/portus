@@ -85,7 +85,7 @@ cd portus && docker run -it --rm \
 --env PUMA_WORKERS=4 \
 --env MACHINE_FQDN=127.0.0.1 \
 --env DELETE_ENABLED=true \
---env SECRETS_SECRET_KEY_BASE=secret-goes-here \
+--env SECRETS_SECRET_KEY_BASE=$(openssl rand -hex 64) \
 --env SECRETS_ENCRYPTION_PRIVATE_KEY_PATH=/certs/server-key.pem \
 --env SECRETS_PORTUS_PASSWORD=portuspw \
 h0tbird/portus:latest
