@@ -9,7 +9,7 @@ DB_CONFIG_FILE='/portus/config/database.yml'
 SECRETS_CONFIG_FILE='/portus/config/secrets.yml'
 
 # Machine fqdn:
-: ${MACHINE_FQDN:-127.0.0.1} && \
+: ${MACHINE_FQDN:=127.0.0.1} && \
 sed -i "s#XXX-MACHINE_FQDN-XXX#${MACHINE_FQDN}#" ${CONFIG_FILE}
 
 # Delete enabled:
@@ -17,43 +17,43 @@ sed -i "s#XXX-MACHINE_FQDN-XXX#${MACHINE_FQDN}#" ${CONFIG_FILE}
 sed -i "s#XXX-DELETE_ENABLED-XXX#${DELETE_ENABLED}#" ${CONFIG_FILE}
 
 # Adapter:
-: ${DB_ADAPTER:-mysql2} && \
+: ${DB_ADAPTER:=mysql2} && \
 sed -i "s#XXX-DB_ADAPTER-XXX#${DB_ADAPTER}#" ${DB_CONFIG_FILE}
 
 # Encoding:
-: ${DB_ENCODING:-utf8} && \
+: ${DB_ENCODING:=utf8} && \
 sed -i "s#XXX-DB_ENCODING-XXX#${DB_ENCODING}#" ${DB_CONFIG_FILE}
 
 # Host:
-: ${DB_HOST:-db} && \
+: ${DB_HOST:=db} && \
 sed -i "s#XXX-DB_HOST-XXX#${DB_HOST}#" ${DB_CONFIG_FILE}
 
 # Port:
-: ${DB_PORT:-3306} && \
+: ${DB_PORT:=3306} && \
 sed -i "s#XXX-DB_PORT-XXX#${DB_PORT}#" ${DB_CONFIG_FILE}
 
 # Username:
-: ${DB_USERNAME:-root} && \
+: ${DB_USERNAME:=root} && \
 sed -i "s#XXX-DB_USERNAME-XXX#${DB_USERNAME}#" ${DB_CONFIG_FILE}
 
 # Password:
-: ${DB_PASSWORD:-portus} && \
+: ${DB_PASSWORD:=portus} && \
 sed -i "s#XXX-DB_PASSWORD-XXX#${DB_PASSWORD}#" ${DB_CONFIG_FILE}
 
 # Database:
-: ${DB_DATABASE:-portus} && \
+: ${DB_DATABASE:=portus} && \
 sed -i "s#XXX-DB_DATABASE-XXX#${DB_DATABASE}#" ${DB_CONFIG_FILE}
 
 # Secret key base:
-: ${SECRETS_SECRET_KEY_BASE:-secret-goes-here} && \
+: ${SECRETS_SECRET_KEY_BASE:=secret-goes-here} && \
 sed -i "s#XXX-SECRETS_SECRET_KEY_BASE-XXX#${SECRETS_SECRET_KEY_BASE}#" ${SECRETS_CONFIG_FILE}
 
 # Encryption private key path:
-: ${SECRETS_ENCRYPTION_PRIVATE_KEY_PATH:-/certs/server-key.pem} && \
+: ${SECRETS_ENCRYPTION_PRIVATE_KEY_PATH:=/certs/server-key.pem} && \
 sed -i "s#XXX-SECRETS_ENCRYPTION_PRIVATE_KEY_PATH-XXX#${SECRETS_ENCRYPTION_PRIVATE_KEY_PATH}#" ${SECRETS_CONFIG_FILE}
 
 # Portus password:
-: ${SECRETS_PORTUS_PASSWORD:-portus} && \
+: ${SECRETS_PORTUS_PASSWORD:=portus} && \
 sed -i "s#XXX-SECRETS_PORTUS_PASSWORD-XXX#${SECRETS_PORTUS_PASSWORD}#" ${SECRETS_CONFIG_FILE}
 
 # Set Rack and Rails environment:
