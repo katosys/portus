@@ -98,8 +98,9 @@ Make sure any endpoint defined in `SSL_TRUST` is up and running before starting 
 cd portus && docker run -it --rm \
 --net host --name registry \
 --volume ${PWD}/certs:/certs \
---env REGISTRY_LOG_LEVEL=info \
---env REGISTRY_HTTP_SECRET=secret-goes-here \
+--env REGISTRY_LOG_LEVEL=debug \
+--env REGISTRY_HTTP_DEBUG_ADDR=127.0.0.1:5001 \
+--env REGISTRY_HTTP_SECRET=$(openssl rand -hex 64) \
 --env REGISTRY_HTTP_TLS_CERTIFICATE=/certs/server-crt.pem \
 --env REGISTRY_HTTP_TLS_KEY=/certs/server-key.pem \
 --env REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY=/var/lib/registry \
@@ -114,6 +115,13 @@ cd portus && docker run -it --rm \
 --env ENDPOINT_THRESHOLD=5 \
 --env ENDPOINT_BACKOFF=1 \
 h0tbird/registry:v2.4.1-1
+```
+
+Verify the status of the registry:
+
+```
+curl -s http://127.0.0.1:5001/debug/health | jq '.'
+curl -s http://127.0.0.1:5001/debug/vars | jq '.'
 ```
 
 ##### 5. Docker:
