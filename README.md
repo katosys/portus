@@ -83,11 +83,11 @@ cd portus && docker run -it --rm \
 --env PUMA_IP=127.0.0.1 \
 --env PUMA_PORT=443 \
 --env PUMA_WORKERS=4 \
---env MACHINE_FQDN=127.0.0.1 \
---env DELETE_ENABLED=true \
---env SECRETS_SECRET_KEY_BASE=$(openssl rand -hex 64) \
---env SECRETS_ENCRYPTION_PRIVATE_KEY_PATH=/certs/server-key.pem \
---env SECRETS_PORTUS_PASSWORD=portuspw \
+--env PORTUS_MACHINE_FQDN=127.0.0.1 \
+--env PORTUS_DELETE_ENABLED=true \
+--env PORTUS_SECRET_KEY_BASE=$(openssl rand -hex 64) \
+--env PORTUS_ENCRYPTION_PRIVATE_KEY_PATH=/certs/server-key.pem \
+--env PORTUS_PORTUS_PASSWORD=portuspw \
 h0tbird/portus:latest
 ```
 
