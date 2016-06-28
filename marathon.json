@@ -94,7 +94,7 @@
             { "key": "env", "value": "MYSQL_PASSWORD=portus" },
             { "key": "env", "value": "MYSQL_DATABASE=portus" },
             { "key": "volume-driver", "value": "rexray" },
-            { "key": "volume", "value": "cell-1_dub-sys-portus-db:/var/lib/mysql" }
+            { "key": "volume", "value": "cell-1-dub-sys-portus-db:/var/lib/mysql" }
           ],
           "forcePullImage": false
         }
