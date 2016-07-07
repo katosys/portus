@@ -28,7 +28,7 @@
             { "key": "env", "value": "MARIADB_SERVICE_HOST=db-portus-sys.marathon" },
             { "key": "env", "value": "MARIADB_PORT=3306" },
             { "key": "env", "value": "MARIADB_USER=portus" },
-            { "key": "env", "value": "MARIADB_PASSWORD=portus" },
+            { "key": "env", "value": "MARIADB_PASSWORD" },
             { "key": "env", "value": "MARIADB_DATABASE=portus" },
             { "key": "env", "value": "RACK_ENV=production" },
             { "key": "env", "value": "RAILS_ENV=production" },
@@ -38,10 +38,10 @@
             { "key": "env", "value": "PUMA_WORKERS=4" },
             { "key": "env", "value": "SSL_CERT_DIR=/mnt/mesos/sandbox/certs" },
             { "key": "env", "value": "PORTUS_MACHINE_FQDN=web-portus-sys.marathon" },
-            { "key": "env", "value": "PORTUS_SECRET_KEY_BASE=secret-goes-here" },
+            { "key": "env", "value": "PORTUS_SECRET_KEY_BASE" },
             { "key": "env", "value": "PORTUS_DELETE_ENABLED=true" },
             { "key": "env", "value": "PORTUS_ENCRYPTION_PRIVATE_KEY_PATH=/mnt/mesos/sandbox/certs/server-key.pem" },
-            { "key": "env", "value": "PORTUS_PORTUS_PASSWORD=portuspw" }
+            { "key": "env", "value": "PORTUS_PORTUS_PASSWORD" }
           ],
           "forcePullImage": false
         }
@@ -89,9 +89,9 @@
           ],
           "privileged": false,
           "parameters": [
-            { "key": "env", "value": "MYSQL_ROOT_PASSWORD=portus" },
+            { "key": "env", "value": "MYSQL_ROOT_PASSWORD" },
             { "key": "env", "value": "MYSQL_USER=portus" },
-            { "key": "env", "value": "MYSQL_PASSWORD=portus" },
+            { "key": "env", "value": "MYSQL_PASSWORD" },
             { "key": "env", "value": "MYSQL_DATABASE=portus" },
             { "key": "volume-driver", "value": "rexray" },
             { "key": "volume", "value": "cell-1-dub-sys-portus-db:/var/lib/mysql" }

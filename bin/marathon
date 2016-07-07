@@ -1,20 +1,59 @@
 #!/bin/bash
 
+#------------------------------------------------------------------------------
+# Sanity checks:
+#------------------------------------------------------------------------------
+
 [ $# -ne 1 ] && echo "Usage: $0 <start|deploy|destroy>" && exit 1
 [ -z "${MARATHON_URL}" ] && echo 'Ops! MARATHON_URL is not set' && exit 1
+
+#------------------------------------------------------------------------------
+# reparametrize reads a marathon.json file from stdin and replaces any docker
+# parameter which value is equal to '$1' with a new composed value of '$1=$2'.
+# The result is then written to stdout allowing to pipe it over and over.
+#------------------------------------------------------------------------------
+
+function reparametrize() {
+  jq --arg env "$1" --arg val "$1=$2" \
+  '(.apps[] | .container.docker.parameters[] |
+  select(.value == $env) | .value) |= $val'
+}
+
+#------------------------------------------------------------------------------
+# Generate a temporary reparametrized json file:
+#------------------------------------------------------------------------------
+
+TMPF=$(mktemp /tmp/marathon-portus.XXX)
+
+cat marathon.json |
+  reparametrize 'MARIADB_PASSWORD' "${MARIADB_PASSWORD:-portus}" |
+  reparametrize 'PORTUS_PORTUS_PASSWORD' "${PORTUS_PORTUS_PASSWORD:-portus}" |
+  reparametrize 'PORTUS_SECRET_KEY_BASE' "${PORTUS_SECRET_KEY_BASE:-portus}" |
+  reparametrize 'MYSQL_ROOT_PASSWORD' "${MYSQL_ROOT_PASSWORD:-portus}" |
+  reparametrize 'MYSQL_PASSWORD' "${MARIADB_PASSWORD:-portus}" \
+> ${TMPF}
+
+trap "rm -f ${TMPF}" INT TERM HUP EXIT
+
+#------------------------------------------------------------------------------
+# start, deploy or destroy:
+#------------------------------------------------------------------------------
 
 case $1 in
 
   start)
-    curl -sX POST -H "Content-type: application/json" ${MARATHON_URL}/v2/groups -d @marathon.json | jq '.'
+    curl -sX POST -H "Content-type: application/json" \
+      ${MARATHON_URL}/v2/groups -d @${TMPF}
     ;;
 
   deploy)
-    curl -sX PUT -H "Content-type: application/json" ${MARATHON_URL}/v2/groups -d @marathon.json | jq '.'
+    curl -sX PUT -H "Content-type: application/json" \
+      ${MARATHON_URL}/v2/groups -d @${TMPF}
     ;;
 
   destroy)
-    curl -sX DELETE -H "Content-type: application/json" ${MARATHON_URL}/v2/groups/sys/portus | jq '.'
+    curl -sX DELETE -H "Content-type: application/json" \
+      ${MARATHON_URL}/v2/groups/sys/portus
     ;;
 
-esac
+esac | jq '.'
