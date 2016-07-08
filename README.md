@@ -87,12 +87,11 @@ cd portus && docker run -it --rm \
 --env PORTUS_DELETE_ENABLED=true \
 --env PORTUS_SECRET_KEY_BASE=$(openssl rand -hex 64) \
 --env PORTUS_ENCRYPTION_PRIVATE_KEY_PATH=/certs/server-key.pem \
---env PORTUS_PORTUS_PASSWORD=$(openssl rand -hex 64) \
-h0tbird/portus:v2.0.5-3
+--env PORTUS_PORTUS_PASSWORD=some-password \
+h0tbird/portus:v2.0.5-4
 ```
 
-Browse to https://127.0.0.1 and setup the `portus` user with the password provided in `PORTUS_PORTUS_PASSWORD`.
-Do not fill the *New Registry* form until you have actually started the registry in step 4.
+Browse to https://127.0.0.1 and setup the `portus` user with the same password provided in the environment variable `PORTUS_PORTUS_PASSWORD`. Do not fill the *New Registry* form until you have actually started the registry in step 4.
 
 ##### 4. Registry:
 
@@ -129,8 +128,7 @@ curl -s http://127.0.0.1:5001/debug/health | jq '.'
 curl -s http://127.0.0.1:5001/debug/vars | jq '.'
 ```
 
-Now you can fill the *New Registry* form. Use `127.0.0.1:5000` for the hostname and check the SSL checkbox.
-At this point you are logged in as `portus` user. You won't be able to use that user again so create your own admin user before you logout.
+Now you can fill the *New Registry* form. Use `127.0.0.1:5000` for the hostname and check the SSL checkbox. At this point you are logged in as `portus` user. You won't be able to use that user again so create your own admin user before you logout.
 
 ##### 5. Docker:
 ```
