@@ -27,8 +27,9 @@ RUN apk --no-cache add --update -t deps git gcc make musl-dev libxml2-dev \
     && git archive ${PORTUS_VERSION} | tar -xC /portus \
     && git rev-parse --short HEAD > /portus/VERSION; cd /portus \
     && sed -i 's/mysql2 (0.3.18)/mysql2 (0.4.4)/' Gemfile.lock \
-    && bundle install --retry=3 \
-    && apk del --purge deps; rm -rf /tmp/* /var/cache/apk/*
+    && bundle install --retry=3 --no-cache --clean && gem cleanup \
+    && apk del --purge deps; bash -c "rm -rf /{tmp,root}/{*,.??*}" \
+    && rm -rf /usr/lib/ruby/gems/*/cache/* /var/cache/apk/*
 
 #------------------------------------------------------------------------------
 # Populate root file system:
