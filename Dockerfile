@@ -20,7 +20,7 @@ RUN apk --no-cache add --update -t deps git gcc make musl-dev \
     libxml2-dev libxslt-dev mariadb-dev openssl-dev libffi-dev \
     && apk --no-cache add bash ruby-bundler ruby-dev nodejs tzdata libxslt \
     mariadb-libs mariadb-client openssl ruby-io-console ruby-bigdecimal \
-    mariadb-client-libs curl-dev \
+    mariadb-client-libs curl-dev libcurl \
     && echo 'gem: --verbose --no-document' > /etc/gemrc; cd /tmp \
     && git clone https://github.com/SUSE/Portus.git . \
     && git checkout ${PORTUS_VERSION}; mkdir /portus \
