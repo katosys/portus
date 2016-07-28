@@ -33,7 +33,7 @@ first_user_admin:
 signup:
   enabled: true
 check_ssl_usage:
-  enabled: true
+  enabled: XXX-PORTUS_CHECK_SSL_USAGE_ENABLED-XXX
 jwt_expiration_time:
   value: "5.minutes"
 machine_fqdn:
