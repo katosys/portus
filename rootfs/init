@@ -85,7 +85,7 @@ mysql -h ${MARIADB_SERVICE_HOST} -P ${MARIADB_PORT} -u ${MARIADB_USER} -p${MARIA
 #------------------------------------------------------------------------------
 
 [ "${PORT0}" ] && [ ! "${PUMA_PORT}" ] && PUMA_PORT="${PORT0}"
-export SSL_CERT_DIR=${SSL_CERT_DIR:-/certs} && c_rehash ${SSL_CERT_DIR}
+export SSL_CERT_DIR=${SSL_CERT_DIR:-/certs:/usr/local/share/ca-certificates:/etc/ssl/certs} && c_rehash
 
 echo "--[${CONFIG_FILE}]------------------------------------------------------"
 cat ${CONFIG_FILE}
