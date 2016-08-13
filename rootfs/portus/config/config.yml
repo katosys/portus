@@ -34,9 +34,19 @@ signup:
   enabled: true
 check_ssl_usage:
   enabled: XXX-PORTUS_CHECK_SSL_USAGE_ENABLED-XXX
-jwt_expiration_time:
-  value: "5.minutes"
+registry:
+  jwt_expiration_time:
+    value: 5
+  catalog_page:
+    value: 100
 machine_fqdn:
   value: XXX-PORTUS_MACHINE_FQDN-XXX
 display_name:
   enabled: false
+user_permission:
+  change_visibility:
+    enabled: true
+  manage_team:
+    enabled: true
+  manage_namespace:
+    enabled: true
