@@ -132,10 +132,11 @@ Now you can fill the *New Registry* form. Use `127.0.0.1:5000` for the hostname 
 
 ##### 5. Docker:
 ```
-docker login -u <user> 127.0.0.1:5000
+USER='<user>'
+docker login -u ${USER} 127.0.0.1:5000
 docker pull busybox:latest
-docker tag busybox:latest 127.0.0.1:5000/<user>/busybox:latest
-docker push 127.0.0.1:5000/<user>/busybox:latest
-docker rmi busybox:latest 127.0.0.1:5000/<user>/busybox:latest
-docker pull 127.0.0.1:5000/<user>/busybox:latest
+docker tag busybox:latest 127.0.0.1:5000/${USER}/busybox:latest
+docker push 127.0.0.1:5000/${USER}/busybox:latest
+docker rmi busybox:latest 127.0.0.1:5000/${USER}/busybox:latest
+docker pull 127.0.0.1:5000/${USER}/busybox:latest
 ```
