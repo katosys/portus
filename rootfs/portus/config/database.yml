@@ -1,8 +1,8 @@
 default: &default
   adapter:  XXX-MARIADB_ADAPTER-XXX
   encoding: XXX-MARIADB_ENCODING-XXX
-  host:     XXX-MARIADB_SERVICE_HOST-XXX
-  port:     XXX-MARIADB_SERVICE_PORT-XXX
+  host:     XXX-MARIADB_HOST-XXX
+  port:     XXX-MARIADB_PORT-XXX
   username: XXX-MARIADB_USER-XXX
   password: XXX-MARIADB_PASSWORD-XXX
   database: XXX-MARIADB_DATABASE-XXX

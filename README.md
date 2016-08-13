@@ -71,7 +71,7 @@ cd portus && docker run -it --rm \
 --volume ${PWD}/certs:/certs \
 --env MARIADB_ADAPTER=mysql2 \
 --env MARIADB_ENCODING=utf8 \
---env MARIADB_SERVICE_HOST=127.0.0.1 \
+--env MARIADB_HOST=127.0.0.1 \
 --env MARIADB_PORT=3306 \
 --env MARIADB_USER=portus \
 --env MARIADB_PASSWORD=portus \
