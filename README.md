@@ -69,6 +69,7 @@ Note that `PUMA_IP` is to be used if you want to have the registry and portus ru
 cd portus && docker run -it --rm \
 --net host --name portus \
 --volume ${PWD}/certs:/certs \
+--env DEBUG=true \
 --env MARIADB_ADAPTER=mysql2 \
 --env MARIADB_ENCODING=utf8 \
 --env MARIADB_HOST=127.0.0.1 \
