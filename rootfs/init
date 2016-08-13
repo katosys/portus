@@ -70,14 +70,14 @@ export RAILS_ENV=${RAILS_ENV:-production}
 
 function mysql_alive() {
   local RETRIES=30; while [ ${RETRIES} -gt 0 ]; do
-    timeout -t 2 bash -c "echo > /dev/tcp/${MARIADB_SERVICE_HOST}/${MARIADB_PORT}" &> /dev/null && return 0
+    timeout -t 2 bash -c "echo > /dev/tcp/${MARIADB_HOST}/${MARIADB_PORT}" &> /dev/null && return 0
     sleep 1; RETRIES=$((RETRIES - 1)); echo -n '.'
   done; echo; return 1
 }
 
 echo -n 'Waiting for the database '
-mysql_alive || { echo; echo "Ops! Where is ${MARIADB_SERVICE_HOST}:${MARIADB_PORT} ?"; exit 1; }
-mysql -h ${MARIADB_SERVICE_HOST} -P ${MARIADB_PORT} -u ${MARIADB_USER} -p${MARIADB_PASSWORD} ${MARIADB_DATABASE} \
+mysql_alive || { echo; echo "Ops! Where is ${MARIADB_HOST}:${MARIADB_PORT} ?"; exit 1; }
+mysql -h ${MARIADB_HOST} -P ${MARIADB_PORT} -u ${MARIADB_USER} -p${MARIADB_PASSWORD} ${MARIADB_DATABASE} \
 -e "show tables" | grep -q 'registries' || env bundle exec rake db:setup
 
 #------------------------------------------------------------------------------

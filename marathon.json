@@ -25,7 +25,7 @@
           "parameters": [
             { "key": "env", "value": "MARIADB_ADAPTER=mysql2" },
             { "key": "env", "value": "MARIADB_ENCODING=utf8" },
-            { "key": "env", "value": "MARIADB_SERVICE_HOST=db-portus-sys.marathon" },
+            { "key": "env", "value": "MARIADB_HOST=db-portus-sys.marathon" },
             { "key": "env", "value": "MARIADB_PORT=3306" },
             { "key": "env", "value": "MARIADB_USER=portus" },
             { "key": "env", "value": "MARIADB_PASSWORD" },
