@@ -92,7 +92,7 @@ cd portus && docker run -it --rm \
 h0tbird/portus:v2.0.5-5
 ```
 
-Browse to https://127.0.0.1 and setup the `portus` user with the same password provided in the environment variable `PORTUS_PORTUS_PASSWORD`. Do not fill the *New Registry* form until you have actually started the registry in step 4.
+Browse to https://127.0.0.1 and do not fill the *New Registry* form until you have actually started the registry in step 4.
 
 ##### 4. Registry:
 

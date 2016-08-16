@@ -78,7 +78,10 @@ function mysql_alive() {
 echo -n 'Waiting for the database '
 mysql_alive || { echo; echo "Ops! Where is ${MARIADB_HOST}:${MARIADB_PORT} ?"; exit 1; }
 mysql -h ${MARIADB_HOST} -P ${MARIADB_PORT} -u ${MARIADB_USER} -p${MARIADB_PASSWORD} ${MARIADB_DATABASE} \
--e "show tables" | grep -q 'registries' || env bundle exec rake db:setup
+-e "show tables" | grep -q 'registries' || {
+  env bundle exec rake db:migrate:reset
+  env bundle exec rake db:seed
+}
 
 #------------------------------------------------------------------------------
 # Debug:
