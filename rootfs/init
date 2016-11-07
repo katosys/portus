@@ -7,7 +7,7 @@
 CONFIG_FILE='/portus/config/config.yml'
 DB_CONFIG_FILE='/portus/config/database.yml'
 SECRETS_CONFIG_FILE='/portus/config/secrets.yml'
-PUMA_CONFIG_FILE='portus/config/puma.rb'
+PUMA_CONFIG_FILE='/portus/config/puma.rb'
 
 # Machine fqdn:
 : ${PORTUS_MACHINE_FQDN:=127.0.0.1} && \

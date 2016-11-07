@@ -90,7 +90,7 @@ cd portus && docker run -it --rm \
 --env PORTUS_SECRET_KEY_BASE=$(openssl rand -hex 64) \
 --env PORTUS_ENCRYPTION_PRIVATE_KEY_PATH=/certs/server-key.pem \
 --env PORTUS_PORTUS_PASSWORD=some-password \
-h0tbird/portus:v2.1.0-1
+h0tbird/portus:v2.1.1-1
 ```
 
 Browse to https://127.0.0.1 and do not fill the *New Registry* form until you have actually started the registry in step 4.
