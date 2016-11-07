@@ -7,6 +7,7 @@
 CONFIG_FILE='/portus/config/config.yml'
 DB_CONFIG_FILE='/portus/config/database.yml'
 SECRETS_CONFIG_FILE='/portus/config/secrets.yml'
+PUMA_CONFIG_FILE='portus/config/puma.rb'
 
 # Machine fqdn:
 : ${PORTUS_MACHINE_FQDN:=127.0.0.1} && \
@@ -60,6 +61,11 @@ sed -i "s#XXX-PORTUS_ENCRYPTION_PRIVATE_KEY_PATH-XXX#${PORTUS_ENCRYPTION_PRIVATE
 : ${PORTUS_PORTUS_PASSWORD:=portus} && \
 sed -i "s#XXX-PORTUS_PORTUS_PASSWORD-XXX#${PORTUS_PORTUS_PASSWORD}#" ${SECRETS_CONFIG_FILE}
 
+# Puma worker timeout:
+: ${PUMA_WORKER_TIMEOUT:=60} && \
+sed -i "s#XXX-PUMA_WORKER_TIMEOUT-XXX#${PUMA_WORKER_TIMEOUT}#" ${PUMA_CONFIG_FILE}
+
+
 # Set Rack and Rails environment:
 export RACK_ENV=${RACK_ENV:-production}
 export RAILS_ENV=${RAILS_ENV:-production}
@@ -101,5 +107,5 @@ mysql -h ${MARIADB_HOST} -P ${MARIADB_PORT} -u ${MARIADB_USER} -p${MARIADB_PASSW
 export SSL_CERT_DIR=${SSL_CERT_DIR:-/certs:/usr/local/share/ca-certificates:/etc/ssl/certs} && c_rehash
 
 [[ "${PORTUS_CHECK_SSL_USAGE_ENABLED}" == "true" && "${PUMA_SSL_KEY}" && "${PUMA_SSL_CRT}" ]] && \
-exec env puma -e ${RACK_ENV} -b "ssl://${PUMA_IP:-0.0.0.0}:${PUMA_PORT:-443}?key=${PUMA_SSL_KEY}&cert=${PUMA_SSL_CRT}" -w ${PUMA_WORKERS:-3} ||
-exec env puma -e ${RACK_ENV} -b "tcp://${PUMA_IP:-0.0.0.0}:${PUMA_PORT:-80}" -w ${PUMA_WORKERS:-3}
+exec env puma -e ${RACK_ENV} -b "ssl://${PUMA_IP:-0.0.0.0}:${PUMA_PORT:-443}?key=${PUMA_SSL_KEY}&cert=${PUMA_SSL_CRT}" -w ${PUMA_WORKERS:-3} -C /portus/config/puma.rb ||
+exec env puma -e ${RACK_ENV} -b "tcp://${PUMA_IP:-0.0.0.0}:${PUMA_PORT:-80}" -w ${PUMA_WORKERS:-3} -C /portus/config/puma.rb

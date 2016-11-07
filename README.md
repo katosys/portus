@@ -81,6 +81,7 @@ cd portus && docker run -it --rm \
 --env RAILS_ENV=production \
 --env PUMA_SSL_KEY=/certs/server-key.pem \
 --env PUMA_SSL_CRT=/certs/server-crt.pem \
+--env PUMA_WORKER_TIMEOUT=60 \
 --env PUMA_IP=127.0.0.1 \
 --env PUMA_PORT=443 \
 --env PUMA_WORKERS=4 \
