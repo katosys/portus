@@ -3,56 +3,58 @@
   "apps": [
     {
       "id": "web",
-      "instances": 1,
       "cpus": 0.1,
       "mem": 1024,
-      "disk": 0,
+      "instances": 1,
       "backoffSeconds": 1,
       "backoffFactor": 1.15,
       "maxLaunchDelaySeconds": 3600,
       "labels": {
         "owner": "sys"
       },
+      "ipAddress": {
+        "networkName": "devel",
+        "discovery": {
+          "ports": [
+            { "number": 443, "name": "portus", "protocol": "tcp" }
+          ]
+        }
+      },
       "container": {
-        "type": "DOCKER",
+        "type": "MESOS",
         "docker": {
           "image": "h0tbird/portus:v2.0.5-6",
-          "network": "BRIDGE",
-          "portMappings": [
-            { "containerPort": 443, "hostPort": 0 }
-          ],
-          "privileged": false,
-          "parameters": [
-            { "key": "env", "value": "MARIADB_ADAPTER=mysql2" },
-            { "key": "env", "value": "MARIADB_ENCODING=utf8" },
-            { "key": "env", "value": "MARIADB_HOST=db-portus-sys.marathon" },
-            { "key": "env", "value": "MARIADB_PORT=3306" },
-            { "key": "env", "value": "MARIADB_USER=portus" },
-            { "key": "env", "value": "MARIADB_PASSWORD" },
-            { "key": "env", "value": "MARIADB_DATABASE=portus" },
-            { "key": "env", "value": "RACK_ENV=production" },
-            { "key": "env", "value": "RAILS_ENV=production" },
-            { "key": "env", "value": "PUMA_SSL_KEY=/mnt/mesos/sandbox/certs/server-key.pem" },
-            { "key": "env", "value": "PUMA_SSL_CRT=/mnt/mesos/sandbox/certs/server-crt.pem" },
-            { "key": "env", "value": "PUMA_PORT=443" },
-            { "key": "env", "value": "PUMA_WORKERS=4" },
-            { "key": "env", "value": "SSL_CERT_DIR=/mnt/mesos/sandbox/certs" },
-            { "key": "env", "value": "PORTUS_MACHINE_FQDN=web-portus-sys.marathon" },
-            { "key": "env", "value": "PORTUS_SECRET_KEY_BASE" },
-            { "key": "env", "value": "PORTUS_DELETE_ENABLED=true" },
-            { "key": "env", "value": "PORTUS_ENCRYPTION_PRIVATE_KEY_PATH=/mnt/mesos/sandbox/certs/server-key.pem" },
-            { "key": "env", "value": "PORTUS_PORTUS_PASSWORD" }
-          ],
           "forcePullImage": false
         }
       },
+      "env": {
+        "MARIADB_ADAPTER": "mysql2",
+        "MARIADB_ENCODING": "utf8",
+        "MARIADB_HOST": "db-portus-sys.marathon",
+        "MARIADB_PORT": "3306",
+        "MARIADB_USER": "portus",
+        "MARIADB_PASSWORD": "",
+        "MARIADB_DATABASE": "portus",
+        "RACK_ENV": "production",
+        "RAILS_ENV": "production",
+        "PUMA_SSL_KEY": "/mnt/mesos/sandbox/certs/server-key.pem",
+        "PUMA_SSL_CRT": "/mnt/mesos/sandbox/certs/server-crt.pem",
+        "PUMA_PORT": "443",
+        "PUMA_WORKERS": "4",
+        "SSL_CERT_DIR": "/mnt/mesos/sandbox/certs",
+        "PORTUS_MACHINE_FQDN": "web-portus-sys.marathon",
+        "PORTUS_SECRET_KEY_BASE": "",
+        "PORTUS_DELETE_ENABLED": "true",
+        "PORTUS_ENCRYPTION_PRIVATE_KEY_PATH": "/mnt/mesos/sandbox/certs/server-key.pem",
+        "PORTUS_PORTUS_PASSWORD": ""
+      },
       "healthChecks": [
         {
+          "port": 443,
+          "protocol": "TCP",
           "gracePeriodSeconds": 120,
           "intervalSeconds": 30,
           "maxConsecutiveFailures": 3,
-          "portIndex": 0,
-          "protocol": "TCP",
           "timeoutSeconds": 5
         }
       ],
@@ -69,49 +71,68 @@
     },
     {
       "id": "db",
-      "instances": 1,
       "cpus": 0.1,
       "mem": 1024,
-      "disk": 0,
+      "instances": 1,
       "backoffSeconds": 1,
       "backoffFactor": 1.15,
       "maxLaunchDelaySeconds": 3600,
       "labels": {
         "owner": "sys"
       },
+      "ipAddress": {
+        "networkName": "devel",
+        "discovery": {
+          "ports": [
+            { "number": 3306, "name": "mariadb", "protocol": "tcp" }
+          ]
+        }
+      },
       "container": {
-        "type": "DOCKER",
+        "type": "MESOS",
+        "volumes": [
+          {
+            "mode": "RW",
+            "containerPath": "mysqldata",
+            "external": {
+              "size": 1,
+              "name": "cell-1-dub-sys-portus-db",
+              "provider": "dvdi",
+              "options": {
+                "dvdi/driver": "rexray"
+              }
+            }
+          },
+          {
+            "containerPath": "/var/lib/mysql",
+            "hostPath": "mysqldata",
+            "mode": "RW"
+          }
+        ],
         "docker": {
           "image": "library/mariadb:10",
-          "network": "BRIDGE",
-          "portMappings": [
-            { "containerPort": 3306, "hostPort": 0 }
-          ],
-          "privileged": false,
-          "parameters": [
-            { "key": "env", "value": "MYSQL_ROOT_PASSWORD" },
-            { "key": "env", "value": "MYSQL_USER=portus" },
-            { "key": "env", "value": "MYSQL_PASSWORD" },
-            { "key": "env", "value": "MYSQL_DATABASE=portus" },
-            { "key": "volume-driver", "value": "rexray" },
-            { "key": "volume", "value": "cell-1-dub-sys-portus-db:/var/lib/mysql" }
-          ],
           "forcePullImage": false
         }
       },
+      "env": {
+        "MYSQL_ROOT_PASSWORD": "",
+        "MYSQL_USER": "portus",
+        "MYSQL_PASSWORD": "",
+        "MYSQL_DATABASE": "portus"
+      },
       "healthChecks": [
         {
+          "port": 3306,
+          "protocol": "TCP",
           "gracePeriodSeconds": 120,
           "intervalSeconds": 30,
           "maxConsecutiveFailures": 3,
-          "portIndex": 0,
-          "protocol": "TCP",
           "timeoutSeconds": 5
         }
       ],
       "upgradeStrategy": {
         "minimumHealthCapacity": 0,
-        "maximumOverCapacity": 1
+        "maximumOverCapacity": 0
       }
     }
   ]
