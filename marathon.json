@@ -14,6 +14,10 @@
       },
       "ipAddress": {
         "networkName": "devel",
+        "labels": {
+          "app": "web",
+          "group": "portus"
+        },
         "discovery": {
           "ports": [
             { "number": 443, "name": "portus", "protocol": "tcp" }
@@ -82,6 +86,10 @@
       },
       "ipAddress": {
         "networkName": "devel",
+        "labels": {
+          "app": "db",
+          "group": "portus"
+        },
         "discovery": {
           "ports": [
             { "number": 3306, "name": "mariadb", "protocol": "tcp" }
