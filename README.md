@@ -1,6 +1,6 @@
-# docker-portus
+# portus
 
-[![Build Status](https://travis-ci.org/h0tbird/docker-portus.svg?branch=master)](https://travis-ci.org/h0tbird/docker-portus)
+[![Build Status](https://travis-ci.org/katosys/portus.svg?branch=master)](https://travis-ci.org/katosys/portus)
 
 This is a containerized Portus server for the Docker registry. Based on Alpine Linux.
 
@@ -90,7 +90,7 @@ cd portus && docker run -it --rm \
 --env PORTUS_SECRET_KEY_BASE=$(openssl rand -hex 64) \
 --env PORTUS_ENCRYPTION_PRIVATE_KEY_PATH=/certs/server-key.pem \
 --env PORTUS_PORTUS_PASSWORD=some-password \
-h0tbird/portus:v2.1.1-1
+quay.io/kato/portus:v2.1.1-1
 ```
 
 Browse to https://127.0.0.1 and do not fill the *New Registry* form until you have actually started the registry in step 4.
@@ -120,7 +120,7 @@ cd portus && docker run -it --rm \
 --env ENDPOINT_TIMEOUT=500 \
 --env ENDPOINT_THRESHOLD=5 \
 --env ENDPOINT_BACKOFF=1 \
-h0tbird/registry:v2.4.1-2
+quay.io/kato/registry:v2.4.1-2
 ```
 
 Verify the status of the registry:
