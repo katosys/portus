@@ -1,14 +1,14 @@
 #!/bin/bash
 
 #------------------------------------------------------------------------------
-# Sanity checks:
+# Environment variables:
 #------------------------------------------------------------------------------
 
-[ $# -ne 1 ] && echo "Usage: $0 <start|deploy|destroy>" && exit 1
-[ -z "${MARATHON_URL}" ] && echo 'Ops! MARATHON_URL is not set' && exit 1
+export MARATHON_URL="${MARATHON_URL:-http://master-1:8080}"
+export ETCD_ENDPOINTS="${ETCD_ENDPOINTS:-http://quorum-1:2379}"
 
 #------------------------------------------------------------------------------
-# reparametrize reads a marathon.json file from stdin and replaces any docker
+# reparametrize reads a marathon.json file from stdin and replaces any env
 # parameter which value is equal to '$1' with a new composed value of '$1=$2'.
 # The result is then written to stdout allowing to pipe it over and over.
 #------------------------------------------------------------------------------
@@ -19,10 +19,20 @@ function reparametrize() {
 }
 
 #------------------------------------------------------------------------------
+# Deploy the calico policy definitions:
+#------------------------------------------------------------------------------
+
+if ! calicoctl apply -f calico.yaml; then
+  echo "Ops! Unable to create the calico policy."
+  exit 1
+fi
+
+#------------------------------------------------------------------------------
 # Generate a temporary reparametrized json file:
 #------------------------------------------------------------------------------
 
-TMPF=$(mktemp /tmp/marathon-portus.XXX)
+TMP_MARATHON=$(mktemp /tmp/portus-marathon.XXX)
+trap "rm -f ${TMP_MARATHON}" INT TERM HUP EXIT
 
 cat marathon.json |
   reparametrize 'MARIADB_PASSWORD' "${MARIADB_PASSWORD:-portus}" |
@@ -30,29 +40,14 @@ cat marathon.json |
   reparametrize 'PORTUS_SECRET_KEY_BASE' "${PORTUS_SECRET_KEY_BASE:-portus}" |
   reparametrize 'MYSQL_ROOT_PASSWORD' "${MYSQL_ROOT_PASSWORD:-portus}" |
   reparametrize 'MYSQL_PASSWORD' "${MARIADB_PASSWORD:-portus}" \
-> ${TMPF}
-
-trap "rm -f ${TMPF}" INT TERM HUP EXIT
+> ${TMP_MARATHON}
 
 #------------------------------------------------------------------------------
-# start, deploy or destroy:
+# Deploy the marathon app definition:
 #------------------------------------------------------------------------------
 
-case $1 in
-
-  start)
-    curl -sX POST -H "Content-type: application/json" \
-      ${MARATHON_URL}/v2/groups -d @${TMPF}
-    ;;
-
-  deploy)
-    curl -sX PUT -H "Content-type: application/json" \
-      ${MARATHON_URL}/v2/groups -d @${TMPF}
-    ;;
-
-  destroy)
-    curl -sX DELETE -H "Content-type: application/json" \
-      ${MARATHON_URL}/v2/groups/sys/portus
-    ;;
-
-esac | jq '.'
+if ! curl -sX POST -H "Content-type: application/json" \
+${MARATHON_URL}/v2/groups -d @${TMP_MARATHON} | jq '.'; then
+  echo "Ops! Unable to deploy marathon app."
+  exit 1
+fi

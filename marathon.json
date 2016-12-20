@@ -55,7 +55,7 @@
       "healthChecks": [
         {
           "port": 443,
-          "protocol": "TCP",
+          "protocol": "MESOS_HTTPS",
           "gracePeriodSeconds": 120,
           "intervalSeconds": 30,
           "maxConsecutiveFailures": 3,
@@ -131,7 +131,7 @@
       "healthChecks": [
         {
           "port": 3306,
-          "protocol": "TCP",
+          "protocol": "MESOS_TCP",
           "gracePeriodSeconds": 120,
           "intervalSeconds": 30,
           "maxConsecutiveFailures": 3,
