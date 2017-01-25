@@ -18,7 +18,7 @@ ENV PORTUS_VERSION="2.2.0rc2" \
 
 RUN apk --no-cache add -U -t dev git gcc make musl-dev libxml2-dev \
     libxslt-dev mariadb-dev libressl-dev libffi-dev curl-dev \
-    && apk --no-cache add bash ruby-bundler ruby-dev nodejs tzdata \
+    && apk --no-cache add -U bash ruby-bundler ruby-dev nodejs tzdata \
     libxslt mariadb-libs mariadb-client libressl ruby-io-console \
     ruby-bigdecimal mariadb-client-libs libcurl \
     && echo 'gem: --verbose --no-document' > /etc/gemrc; cd /tmp \
