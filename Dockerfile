@@ -2,7 +2,7 @@
 # Set the base image for subsequent instructions:
 #------------------------------------------------------------------------------
 
-FROM alpine:3.4
+FROM alpine:3.5
 MAINTAINER Marc Villacorta Morera <marc.villacorta@gmail.com>
 
 #------------------------------------------------------------------------------
@@ -17,13 +17,13 @@ ENV PORTUS_VERSION="2.2.0rc2" \
 #------------------------------------------------------------------------------
 
 RUN apk --no-cache add -U -t dev git gcc make musl-dev libxml2-dev \
-    libxslt-dev mariadb-dev openssl-dev libffi-dev curl-dev \
+    libxslt-dev mariadb-dev libressl-dev libffi-dev curl-dev \
     && apk --no-cache add bash ruby-bundler ruby-dev nodejs tzdata \
-    libxslt mariadb-libs mariadb-client openssl ruby-io-console \
+    libxslt mariadb-libs mariadb-client libressl ruby-io-console \
     ruby-bigdecimal mariadb-client-libs libcurl \
     && echo 'gem: --verbose --no-document' > /etc/gemrc; cd /tmp \
     && git clone https://github.com/SUSE/Portus.git . \
-    && git checkout ${PORTUS_VERSION}; mkdir /portus \
+    && git checkout ${PORTUS_VERSION} -b build; mkdir /portus \
     && git archive ${PORTUS_VERSION} | tar -xC /portus \
     && git rev-parse --short HEAD > /portus/VERSION; cd /portus \
     && sed -i 's/mysql2 (0.3.18)/mysql2 (0.4.4)/' Gemfile.lock \
