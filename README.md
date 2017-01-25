@@ -15,6 +15,8 @@ This is a containerized [Portus](https://github.com/SUSE/Portus) server for the 
 5. The client retries the original request with the Bearer token embedded in the request’s Authorization header.
 6. The Registry authorizes the client by validating the Bearer token and the claim set embedded within it and begins the push/pull session as usual.
 
+- - - -
+
 ##### 1. Certificate:
 
 Configure one certificate to rule them all:
