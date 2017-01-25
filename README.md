@@ -93,7 +93,7 @@ cd portus && docker run -it --rm \
 quay.io/kato/portus:v2.2.0rc2-1
 ```
 
-Browse to https://127.0.0.1 and fill the 'Create admin' form. Do not fill the *New Registry* form until you have actually started the registry in step 4.
+Browse to https://127.0.0.1 and fill the *'Create admin'* form. Do not fill the *'New Registry'* form until you have actually started the registry in step 4.
 
 ##### 4. Registry:
 
@@ -120,7 +120,7 @@ cd portus && docker run -it --rm \
 --env ENDPOINT_TIMEOUT=500 \
 --env ENDPOINT_THRESHOLD=5 \
 --env ENDPOINT_BACKOFF=1 \
-quay.io/kato/registry:v2.4.1-2
+quay.io/kato/registry:v2.5.1-1
 ```
 
 Verify the status of the registry:
@@ -130,7 +130,7 @@ curl -s http://127.0.0.1:5001/debug/health | jq '.'
 curl -s http://127.0.0.1:5001/debug/vars | jq '.'
 ```
 
-Now you can fill the *New Registry* form. Use `127.0.0.1:5000` for the hostname and check the SSL checkbox.
+Now you can fill the *'New Registry'* form. Use `127.0.0.1:5000` for the hostname and check the SSL checkbox.
 
 ##### 5. Docker:
 ```
