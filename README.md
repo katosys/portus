@@ -2,7 +2,16 @@
 
 [![Build Status](https://travis-ci.org/katosys/portus.svg?branch=master)](https://travis-ci.org/katosys/portus)
 
-This is a containerized Portus server for the Docker registry. Based on Alpine Linux.
+This is a containerized [Portus](https://github.com/SUSE/Portus) server for the Docker registry (based on Alpine Linux). The authentication process can be described in 6 steps:
+
+<img src="six-steps.png" align="center">
+
+1. Attempt to begin a push/pull operation with the registry.
+2. If the registry requires authorization it will return a 401 Unauthorized HTTP response with information on how to authenticate.
+3. The registry client makes a request to the authorization service for a Bearer token.
+4. The authorization service returns an opaque Bearer token representing the client’s authorized access.
+5. The client retries the original request with the Bearer token embedded in the request’s Authorization header.
+6. The Registry authorizes the client by validating the Bearer token and the claim set embedded within it and begins the push/pull session as usual.
 
 ##### 1. Certificate:
 
@@ -120,7 +129,7 @@ cd portus && docker run -it --rm \
 --env ENDPOINT_TIMEOUT=500 \
 --env ENDPOINT_THRESHOLD=5 \
 --env ENDPOINT_BACKOFF=1 \
-quay.io/kato/registry:v2.5.1-1
+quay.io/kato/registry:v2.5.1-2
 ```
 
 Verify the status of the registry:
