@@ -4,7 +4,9 @@
 
 This is a containerized [Portus](https://github.com/SUSE/Portus) server for the Docker registry (based on Alpine Linux). The authentication process can be described in 6 steps:
 
-<img src="six-steps.png" align="center">
+<p align="center">
+  <img src="six-steps.png">
+</p>
 
 1. Attempt to begin a push/pull operation with the registry.
 2. If the registry requires authorization it will return a 401 Unauthorized HTTP response with information on how to authenticate.
@@ -49,7 +51,15 @@ mkdir certs && openssl req -config ssl.conf \
 -keyout certs/server-key.pem -out certs/server-crt.pem
 ```
 
+You can now (optionally) verify the certificate:
+
+```
+openssl x509 -in certs/server-crt.pem -text -noout
+openssl verify -CAfile certs/server-crt.pem certs/server-crt.pem
+```
+
 Instruct docker daemon to trust the certificate:
+
 ```
 sudo mkdir -p /etc/docker/certs.d/127.0.0.1:5000
 sudo cp certs/server-crt.pem /etc/docker/certs.d/127.0.0.1:5000/ca.crt
