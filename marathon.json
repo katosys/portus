@@ -27,7 +27,7 @@
       "container": {
         "type": "MESOS",
         "docker": {
-          "image": "quay.io/kato/portus:v2.1.1-1",
+          "image": "quay.io/kato/portus:v2.2.0-1",
           "forcePullImage": false
         }
       },
