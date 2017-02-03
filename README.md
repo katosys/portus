@@ -111,7 +111,7 @@ cd portus && docker run -it --rm \
 --env PORTUS_SECRET_KEY_BASE=$(openssl rand -hex 64) \
 --env PORTUS_ENCRYPTION_PRIVATE_KEY_PATH=/certs/server-key.pem \
 --env PORTUS_PORTUS_PASSWORD=some-password \
-quay.io/kato/portus:v2.2.0rc2-1
+quay.io/kato/portus:v2.2.0-1
 ```
 
 Browse to https://127.0.0.1 and fill the *'Create admin'* form. Do not fill the *'New Registry'* form until you have actually started the registry in step 4.
