@@ -35,11 +35,11 @@ TMP_MARATHON=$(mktemp /tmp/portus-marathon.XXX)
 trap "rm -f ${TMP_MARATHON}" INT TERM HUP EXIT
 
 cat marathon.json |
-  reparametrize 'MARIADB_PASSWORD' "${MARIADB_PASSWORD:-portus}" |
-  reparametrize 'PORTUS_PORTUS_PASSWORD' "${PORTUS_PORTUS_PASSWORD:-portus}" |
-  reparametrize 'PORTUS_SECRET_KEY_BASE' "${PORTUS_SECRET_KEY_BASE:-portus}" |
-  reparametrize 'MYSQL_ROOT_PASSWORD' "${MYSQL_ROOT_PASSWORD:-portus}" |
-  reparametrize 'MYSQL_PASSWORD' "${MARIADB_PASSWORD:-portus}" \
+  reparametrize 'MARIADB_PASSWORD' "${MARIADB_PASSWORD:-portus123}" |
+  reparametrize 'PORTUS_PORTUS_PASSWORD' "${PORTUS_PORTUS_PASSWORD:-portus123}" |
+  reparametrize 'PORTUS_SECRET_KEY_BASE' "${PORTUS_SECRET_KEY_BASE:-portus123}" |
+  reparametrize 'MYSQL_ROOT_PASSWORD' "${MYSQL_ROOT_PASSWORD:-portus123}" |
+  reparametrize 'MYSQL_PASSWORD' "${MARIADB_PASSWORD:-portus123}" \
 > ${TMP_MARATHON}
 
 #------------------------------------------------------------------------------
