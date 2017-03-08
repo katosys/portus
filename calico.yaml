@@ -1,9 +1,20 @@
 - apiVersion: v1
   kind: policy
   metadata:
-    name: portus
+    name: portus-web
   spec:
-    order: 50
+    selector: group == 'portus' && app == 'web'
+    ingress:
+    - action: allow
+      protocol: tcp
+      destination:
+       ports:
+        - 443
+- apiVersion: v1
+  kind: policy
+  metadata:
+    name: portus-db
+  spec:
     selector: group == 'portus' && app == 'db'
     ingress:
     - action: allow

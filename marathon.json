@@ -10,7 +10,12 @@
       "backoffFactor": 1.15,
       "maxLaunchDelaySeconds": 3600,
       "labels": {
-        "owner": "sys"
+        "owner": "sys",
+        "HAPROXY_GROUP": "external",
+        "HAPROXY_0_FRONTEND_HEAD": "",
+        "HAPROXY_0_FRONTEND_BACKEND_GLUE": "",
+        "HAPROXY_0_VHOST": "portus.kato.one",
+        "HAPROXY_DEPLOYMENT_GROUP": "sys_portus"
       },
       "ipAddress": {
         "networkName": "devel",
@@ -34,7 +39,7 @@
       "env": {
         "MARIADB_ADAPTER": "mysql2",
         "MARIADB_ENCODING": "utf8",
-        "MARIADB_HOST": "db-portus-sys.marathon",
+        "MARIADB_HOST": "db-portus-sys",
         "MARIADB_PORT": "3306",
         "MARIADB_USER": "portus",
         "MARIADB_PASSWORD": "",
@@ -46,7 +51,7 @@
         "PUMA_PORT": "443",
         "PUMA_WORKERS": "4",
         "SSL_CERT_DIR": "/mnt/mesos/sandbox/certs",
-        "PORTUS_MACHINE_FQDN": "web-portus-sys.marathon",
+        "PORTUS_MACHINE_FQDN": "web-portus-sys",
         "PORTUS_SECRET_KEY_BASE": "",
         "PORTUS_DELETE_ENABLED": "true",
         "PORTUS_ENCRYPTION_PRIVATE_KEY_PATH": "/mnt/mesos/sandbox/certs/server-key.pem",
@@ -104,7 +109,7 @@
             "containerPath": "mysqldata",
             "external": {
               "size": 1,
-              "name": "cell-1-dub-sys-portus-db",
+              "name": "sys-portus-db",
               "provider": "dvdi",
               "options": {
                 "dvdi/driver": "rexray"
