@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #------------------------------------------------------------------------------
-# Configure the service:
+# Config files:
 #------------------------------------------------------------------------------
 
 CONFIG_FILE='/portus/config/config.yml'
@@ -9,63 +9,40 @@ DB_CONFIG_FILE='/portus/config/database.yml'
 SECRETS_CONFIG_FILE='/portus/config/secrets.yml'
 PUMA_CONFIG_FILE='/portus/config/puma.rb'
 
-# Machine fqdn:
-: ${PORTUS_MACHINE_FQDN:=127.0.0.1} && \
-sed -i "s#XXX-PORTUS_MACHINE_FQDN-XXX#${PORTUS_MACHINE_FQDN}#" ${CONFIG_FILE}
+#------------------------------------------------------------------------------
+# Search and replace:
+#------------------------------------------------------------------------------
 
-# Delete enabled:
-: ${PORTUS_DELETE_ENABLED:=false} && \
-sed -i "s#XXX-PORTUS_DELETE_ENABLED-XXX#${PORTUS_DELETE_ENABLED}#" ${CONFIG_FILE}
+# Portus config file:
+sed -i ${CONFIG_FILE} \
+  -e "s#XXX-PORTUS_MACHINE_FQDN-XXX#${PORTUS_MACHINE_FQDN:-127.0.0.1}#" \
+  -e "s#XXX-PORTUS_DELETE_ENABLED-XXX#${PORTUS_DELETE_ENABLED:-false}#" \
+  -e "s#XXX-PORTUS_CHECK_SSL_USAGE_ENABLED-XXX#${PORTUS_CHECK_SSL_USAGE_ENABLED:-true}#"
 
-# SSL enabled:
-: ${PORTUS_CHECK_SSL_USAGE_ENABLED:=true} && \
-sed -i "s#XXX-PORTUS_CHECK_SSL_USAGE_ENABLED-XXX#${PORTUS_CHECK_SSL_USAGE_ENABLED}#" ${CONFIG_FILE}
+# Database config file:
+sed -i ${DB_CONFIG_FILE} \
+  -e "s#XXX-MARIADB_ADAPTER-XXX#${MARIADB_ADAPTER:=mysql2}#" \
+  -e "s#XXX-MARIADB_ENCODING-XXX#${MARIADB_ENCODING:=utf8}#" \
+  -e "s#XXX-MARIADB_HOST-XXX#${MARIADB_HOST:=db}#" \
+  -e "s#XXX-MARIADB_PORT-XXX#${MARIADB_PORT:=3306}#" \
+  -e "s#XXX-MARIADB_USER-XXX#${MARIADB_USER:=root}#" \
+  -e "s#XXX-MARIADB_PASSWORD-XXX#${MARIADB_PASSWORD:=portus}#" \
+  -e "s#XXX-MARIADB_DATABASE-XXX#${MARIADB_DATABASE:=portus}#"
 
-# Adapter:
-: ${MARIADB_ADAPTER:=mysql2} && \
-sed -i "s#XXX-MARIADB_ADAPTER-XXX#${MARIADB_ADAPTER}#" ${DB_CONFIG_FILE}
+# Secrets config file:
+sed -i ${SECRETS_CONFIG_FILE} \
+  -e "s#XXX-PORTUS_SECRET_KEY_BASE-XXX#${PORTUS_SECRET_KEY_BASE:-secret-goes-here}#" \
+  -e "s#XXX-PORTUS_ENCRYPTION_PRIVATE_KEY_PATH-XXX#${PORTUS_ENCRYPTION_PRIVATE_KEY_PATH:-/certs/server-key.pem}#" \
+  -e "s#XXX-PORTUS_PORTUS_PASSWORD-XXX#${PORTUS_PORTUS_PASSWORD:-portus}#"
 
-# Encoding:
-: ${MARIADB_ENCODING:=utf8} && \
-sed -i "s#XXX-MARIADB_ENCODING-XXX#${MARIADB_ENCODING}#" ${DB_CONFIG_FILE}
+# Puma config file:
+sed -i ${PUMA_CONFIG_FILE} \
+  -e "s#XXX-PUMA_WORKER_TIMEOUT-XXX#${PUMA_WORKER_TIMEOUT:=60}#"
 
-# Host:
-: ${MARIADB_HOST:=db} && \
-sed -i "s#XXX-MARIADB_HOST-XXX#${MARIADB_HOST}#" ${DB_CONFIG_FILE}
-
-# Port:
-: ${MARIADB_PORT:=3306} && \
-sed -i "s#XXX-MARIADB_PORT-XXX#${MARIADB_PORT}#" ${DB_CONFIG_FILE}
-
-# Username:
-: ${MARIADB_USER:=root} && \
-sed -i "s#XXX-MARIADB_USER-XXX#${MARIADB_USER}#" ${DB_CONFIG_FILE}
-
-# Password:
-: ${MARIADB_PASSWORD:=portus} && \
-sed -i "s#XXX-MARIADB_PASSWORD-XXX#${MARIADB_PASSWORD}#" ${DB_CONFIG_FILE}
-
-# Database:
-: ${MARIADB_DATABASE:=portus} && \
-sed -i "s#XXX-MARIADB_DATABASE-XXX#${MARIADB_DATABASE}#" ${DB_CONFIG_FILE}
-
-# Secret key base:
-: ${PORTUS_SECRET_KEY_BASE:=secret-goes-here} && \
-sed -i "s#XXX-PORTUS_SECRET_KEY_BASE-XXX#${PORTUS_SECRET_KEY_BASE}#" ${SECRETS_CONFIG_FILE}
-
-# Encryption private key path:
-: ${PORTUS_ENCRYPTION_PRIVATE_KEY_PATH:=/certs/server-key.pem} && \
-sed -i "s#XXX-PORTUS_ENCRYPTION_PRIVATE_KEY_PATH-XXX#${PORTUS_ENCRYPTION_PRIVATE_KEY_PATH}#" ${SECRETS_CONFIG_FILE}
-
-# Portus password:
-: ${PORTUS_PORTUS_PASSWORD:=portus} && \
-sed -i "s#XXX-PORTUS_PORTUS_PASSWORD-XXX#${PORTUS_PORTUS_PASSWORD}#" ${SECRETS_CONFIG_FILE}
-
-# Puma worker timeout:
-: ${PUMA_WORKER_TIMEOUT:=60} && \
-sed -i "s#XXX-PUMA_WORKER_TIMEOUT-XXX#${PUMA_WORKER_TIMEOUT}#" ${PUMA_CONFIG_FILE}
-
+#------------------------------------------------------------------------------
 # Set Rack and Rails environment:
+#------------------------------------------------------------------------------
+
 export RACK_ENV=${RACK_ENV:-production}
 export RAILS_ENV=${RAILS_ENV:-production}
 
@@ -104,8 +81,8 @@ mysql -h ${MARIADB_HOST} -P ${MARIADB_PORT} -u ${MARIADB_USER} -p${MARIADB_PASSW
 
 [ "${PORT0}" ] && [ ! "${PUMA_PORT}" ] && PUMA_PORT="${PORT0}"
 export SSL_CERT_DIR=${SSL_CERT_DIR:-/certs:/usr/local/share/ca-certificates:/etc/ssl/certs} && update-ca-certificates
-[ "${PUMA_SSL_CRT}" ] && cat ${PUMA_SSL_CRT} >> /etc/ssl/certs/ca-certificates.crt
+[ -f "${PUMA_SSL_CRT}" ] && cat ${PUMA_SSL_CRT} >> /etc/ssl/certs/ca-certificates.crt
 
-[[ "${PORTUS_CHECK_SSL_USAGE_ENABLED}" == "true" && "${PUMA_SSL_KEY}" && "${PUMA_SSL_CRT}" ]] && \
+[[ "${PORTUS_CHECK_SSL_USAGE_ENABLED:-true}" == "true" && "${PUMA_SSL_KEY}" && "${PUMA_SSL_CRT}" ]] && \
 exec env puma -e ${RACK_ENV} -b "ssl://${PUMA_IP:-0.0.0.0}:${PUMA_PORT:-443}?key=${PUMA_SSL_KEY}&cert=${PUMA_SSL_CRT}" -w ${PUMA_WORKERS:-3} -C /portus/config/puma.rb ||
 exec env puma -e ${RACK_ENV} -b "tcp://${PUMA_IP:-0.0.0.0}:${PUMA_PORT:-80}" -w ${PUMA_WORKERS:-3} -C /portus/config/puma.rb
