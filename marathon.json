@@ -14,6 +14,7 @@
         "HAPROXY_GROUP": "external",
         "HAPROXY_0_FRONTEND_HEAD": "",
         "HAPROXY_0_FRONTEND_BACKEND_GLUE": "",
+        "HAPROXY_0_BACKEND_SERVER_OPTIONS": "  server {serverName} {host_ipv4}:{port}{cookieOptions} check ssl verify none\n",
         "HAPROXY_0_VHOST": "portus.kato.one",
         "HAPROXY_DEPLOYMENT_GROUP": "sys_portus"
       },
