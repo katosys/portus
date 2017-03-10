@@ -110,7 +110,7 @@
             "containerPath": "mysqldata",
             "external": {
               "size": 1,
-              "name": "sys-portus-db",
+              "name": "cell-1-dub-sys-portus-db",
               "provider": "dvdi",
               "options": {
                 "dvdi/driver": "rexray"
